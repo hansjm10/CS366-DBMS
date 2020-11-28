@@ -15,6 +15,8 @@ namespace SQLConnection
             using var con = new MySqlConnection(connString);
             var stm = "SELECT VERSION()";
             
+
+            //Test adding a line.
             Console.WriteLine("Connecting...");
             try
             {

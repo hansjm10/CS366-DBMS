@@ -5605,11 +5605,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\SQLConnection.csproj",
+      "projectUniqueName": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
       "projectName": "SQLConnection",
-      "projectPath": "c:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\SQLConnection.csproj",
+      "projectPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
       "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\obj\\",
+      "outputPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jorda\\AppData\\Roaming\\NuGet\\NuGet.Config",
