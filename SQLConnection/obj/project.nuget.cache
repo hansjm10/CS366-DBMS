@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iCEnph4r8mTmiymYnBCctLglRcx0usANb1/lkt8dgIuEUu4VGHBpdGv6UErzkumQURHyX6zEh6dRxmJDl6DEig==",
+  "dgSpecHash": "cTfqszKZ5zAkBaKHpt4FoI/8UIySjvUEh4gSFB2pCPeIeJOZd6hbOcg0ZEdO95nHXByOmrY+eJSX0UyCJG/ZmA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
+  "projectFilePath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\SQLConnection.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jorda\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\jorda\\.nuget\\packages\\google.protobuf\\3.11.4\\google.protobuf.3.11.4.nupkg.sha512",

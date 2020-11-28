@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj": {}
+    "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\SQLConnection.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj": {
+    "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\SQLConnection.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
+        "projectUniqueName": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\SQLConnection.csproj",
         "projectName": "SQLConnection",
-        "projectPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
+        "projectPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\SQLConnection.csproj",
         "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\obj\\",
+        "outputPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\SQLConnection\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jorda\\AppData\\Roaming\\NuGet\\NuGet.Config",
