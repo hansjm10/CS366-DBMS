@@ -17,6 +17,7 @@ namespace SQLConnection
             
 
             //Test adding a line.
+            Console.WriteLine("Heyo!");
             Console.WriteLine("Connecting...");
             try
             {
