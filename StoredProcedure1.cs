@@ -23,7 +23,7 @@ namespace SQLConnection
                 cmd.CommandText = "delimiter $$ drop procedure of exists getUserCred;";
                 cmd.ExecuteNonQuery();
                 cmd.CommandText = "create procedure getUserCred(" +
-                                  "INOUT userID varchar(255), INOUT userName varchar(255), OUT userAge)" +
+                                  "INOUT userID varchar(255), INOUT userName varchar(255), OUT userAge) " +
                                   "begin select* into userID, userName, userAge from Users where User_ID = userID;" +
                                   "end $$ delimiter;";
 

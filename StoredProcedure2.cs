@@ -7,24 +7,22 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace UsingStoredRoutines
+namespace SQLConnection
 {
     class StoredProcedure2
     {
-        static void Main(string[] args)
+        static void SP2(MySqlConnection conn)
         {
-            MySqlConnection conn = new MySqlConnection();
-            conn.ConnectionString = "server=localhost;user=root;database=employees;port=3306;password=******";
             MySqlCommand cmd = new MySqlCommand();
 
             try
             {
-                cmd.CommandText = "DROP PROCEDURE IF EXISTS add_emp";
+                cmd.CommandText = "delimiter $$drop procedure if exists filterAge13;";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "CREATE PROCEDURE add_emp(" +
-                                  "IN fname VARCHAR(20), IN lname VARCHAR(20), IN bday DATETIME, OUT empno INT)" +
-                                  "BEGIN INSERT INTO emp(first_name, last_name, birthdate) " +
-                                  "VALUES(fname, lname, DATE(bday)); SET empno = LAST_INSERT_ID(); END";
+                cmd.CommandText = "create procedure filterAge13(" +
+                                  "OUT title varchar(255), OUT releaseYearvarchar(255), OUT ageRating varchar(255), OUT pub varchar(255), OUT dev varchar(255)) " +
+                                  "begin select Title, Release_Year, Age_Rating, Publisher, Developer into title, releaseYear, ageRating, pub, dev from Video_Games where (Age_Rating != ‘T’) and (Age_Rating != ‘M’); " +
+                                  "end $$ delimiter ;";
                 cmd.ExecuteNonQuery();
             }
             catch (MySqlException ex)

@@ -7,14 +7,12 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace UsingStoredRoutines
+namespace SQLConnection
 {
     class StoredProcedure5
     {
-        static void Main(string[] args)
+        static void SP5(MySqlConnection conn)
         {
-            MySqlConnection conn = new MySqlConnection();
-            conn.ConnectionString = "server=localhost;user=root;database=employees;port=3306;password=******";
             MySqlCommand cmd = new MySqlCommand();
 
             try
@@ -22,17 +20,12 @@ namespace UsingStoredRoutines
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "DROP PROCEDURE IF EXISTS add_emp";
+                cmd.CommandText = "delimiter $$ drop procedure if exists filterAnswers;";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "DROP TABLE IF EXISTS emp";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "CREATE TABLE emp (empno INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), birthdate DATE)";
-                cmd.ExecuteNonQuery();
-
-                cmd.CommandText = "CREATE PROCEDURE add_emp(" +
-                                  "IN fname VARCHAR(20), IN lname VARCHAR(20), IN bday DATETIME, OUT empno INT)" +
-                                  "BEGIN INSERT INTO emp(first_name, last_name, birthdate) " +
-                                  "VALUES(fname, lname, DATE(bday)); SET empno = LAST_INSERT_ID(); END";
+                cmd.CommandText = "create procedure filterAnswers(" +
+                                  "OUT title varchar(255), IN rY1 varchar(255), IN rY2 varchar(255), OUT releaseYear varchar(255), INOUT ageRating varchar(255), INOUT pub varchar(255), INOUT dev varchar(255)) " +
+                                  "select Title, Release_Year, Age_Rating, Publisher, Developer into title, releaseYear, ageRating, pub, dev from Video_Games where (Release_Year >= rY1 and ReleaseYear < rY2) or (Developer = dev) or (Publisher = pub); " +
+                                  "end $$ delimiter ;";
 
                 cmd.ExecuteNonQuery();
             }
