@@ -11,21 +11,21 @@ namespace SQLConnection
 {
     class StoredProcedure1
     {
-        MySqlConnection conn = new MySqlConnection();
-        conn.ConnectionString = "server=localhost;user=root;database=employees;port=3306;password=******";
-        MySqlCommand cmd = new MySqlCommand();
-
-        try
+        static void SP1(MySqlConnection conn)
         {
-            Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
-            cmd.Connection = conn;
-            cmd.CommandText = "delimiter $$ drop procedure of exists getUserCred;";
-            cmd.ExecuteNonQuery();
-            cmd.CommandText = "create procedure getUserCred(" +
-                                "INOUT userID varchar(255), INOUT userName varchar(255), OUT userAge)" +
-                                "begin select* into userID, userName, userAge from Users where User_ID = userID;" +
-                                "end $$ delimiter;";
+            MySqlCommand cmd = new MySqlCommand();
+
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.CommandText = "delimiter $$ drop procedure of exists getUserCred;";
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "create procedure getUserCred(" +
+                                  "INOUT userID varchar(255), INOUT userName varchar(255), OUT userAge)" +
+                                  "begin select* into userID, userName, userAge from Users where User_ID = userID;" +
+                                  "end $$ delimiter;";
 
                 cmd.ExecuteNonQuery();
             }
@@ -67,5 +67,6 @@ namespace SQLConnection
             }
             conn.Close();
             Console.WriteLine("Done.");
+        }
     }
 }
