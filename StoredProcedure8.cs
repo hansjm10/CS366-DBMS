@@ -7,14 +7,12 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace UsingStoredRoutines
+namespace SQLConnection
 {
     class StoredProcedure8
     {
-        static void Main(string[] args)
+        static void SP8(MySqlConnection conn)
         {
-            MySqlConnection conn = new MySqlConnection();
-            conn.ConnectionString = "server=localhost;user=root;database=employees;port=3306;password=******";
             MySqlCommand cmd = new MySqlCommand();
 
             try
@@ -22,17 +20,23 @@ namespace UsingStoredRoutines
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "DROP PROCEDURE IF EXISTS add_emp";
+                cmd.CommandText = "delimiter $$ drop procedure if exists finalOutput;";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "DROP TABLE IF EXISTS emp";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "CREATE TABLE emp (empno INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), birthdate DATE)";
-                cmd.ExecuteNonQuery();
-
-                cmd.CommandText = "CREATE PROCEDURE add_emp(" +
-                                  "IN fname VARCHAR(20), IN lname VARCHAR(20), IN bday DATETIME, OUT empno INT)" +
-                                  "BEGIN INSERT INTO emp(first_name, last_name, birthdate) " +
-                                  "VALUES(fname, lname, DATE(bday)); SET empno = LAST_INSERT_ID(); END";
+                cmd.CommandText =   "create procedure finalOutput(IN title varchar(255), IN userID" +
+                                        "varchar(255), OUT system varchar(255),OUT avgScore float," +
+                                        "OUT numReviews int)" +
+                                    "begin" +
+                                    "select s.System_Name, avg(r.Score) as"+
+                                        "avgsc,sum(r.Num_Reviews) as totrevs into avgScore," +
+                                        "numReviews" +
+                                    "from (Made_For s inner join Metacritic_Reviews r on Game_ID)" +
+                                        "inner join Video_Games g on Game_ID" +
+                                    "where g.Title = title and g.Game_ID = r.Game_ID and g.Game_ID" +
+                                        "= s.Game_ID and g.Game_ID in (select p.Game_ID from" +
+                                        "Prefers where p.User_ID in (select u.User_ID from Users" +
+                                        "U where u.User_ID = userID))" +
+                                    "end $$" +
+                                    "delimiter ;";
 
                 cmd.ExecuteNonQuery();
             }

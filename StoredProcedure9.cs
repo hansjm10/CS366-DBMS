@@ -7,14 +7,13 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace UsingStoredRoutines
+namespace SQLConnection
 {
     class StoredProcedure9
     {
-        static void Main(string[] args)
+        static void SP9(MySqlConnection conn)
         {
-            MySqlConnection conn = new MySqlConnection();
-            conn.ConnectionString = "server=localhost;user=root;database=employees;port=3306;password=******";
+            
             MySqlCommand cmd = new MySqlCommand();
 
             try
@@ -22,17 +21,25 @@ namespace UsingStoredRoutines
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
                 cmd.Connection = conn;
-                cmd.CommandText = "DROP PROCEDURE IF EXISTS add_emp";
+                cmd.CommandText = "delimiter $$ drop procedure if exists showPreferences;";
                 cmd.ExecuteNonQuery();
-                cmd.CommandText = "DROP TABLE IF EXISTS emp";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "CREATE TABLE emp (empno INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), birthdate DATE)";
-                cmd.ExecuteNonQuery();
+                
+                cmd.CommandText = "create procedure showPreferences(IN userID varchar(255), OUT title" +
+                                    "varchar(255), IN rY1 varchar(255), IN rY2 varchar(255), OUT" +
+                                    "releaseYear varchar(255), INOUT ageRating varchar(255), INOUT " +
+                                    "pub varchar(255), INOUT dev varchar(255))" +
+                                    "begin" +
+                                    "select g.Title, g.Release_Year, g.Age_Rating, g.Publisher, " +
+                                    "g.Developer into title, releaseYear, ageRating, pub, dev" +
+                                    "from Video_Games g" +
+                                    "where ((g.Release_Year >= rY1 and g.Release_Year < rY2) or" +
+                                    "(g.Developer = dev) or (g.Publisher = pub)) and" +
+                                    "g.Game_ID not in (select p.Game_ID from Prefers where " + 
+                                    "p.User_ID in (select u.User_ID from Users u where" +
+                                    "u.User_ID = userID));" +
+                                    "end $$" +
+                                    "delimiter ;";
 
-                cmd.CommandText = "CREATE PROCEDURE add_emp(" +
-                                  "IN fname VARCHAR(20), IN lname VARCHAR(20), IN bday DATETIME, OUT empno INT)" +
-                                  "BEGIN INSERT INTO emp(first_name, last_name, birthdate) " +
-                                  "VALUES(fname, lname, DATE(bday)); SET empno = LAST_INSERT_ID(); END";
 
                 cmd.ExecuteNonQuery();
             }
