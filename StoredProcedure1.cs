@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class StoredProcedure1
     {
-        static void SP1(MySqlConnection conn)
+        public void SP1(MySqlConnection conn)
         {
             MySqlCommand cmd = new MySqlCommand();
 

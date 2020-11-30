@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class PStoredProcedure4
     {
-        static void SP4(MySqlConnection conn)
+        public void SP4(MySqlConnection conn)
         {
             MySqlCommand cmd = new MySqlCommand();
 
