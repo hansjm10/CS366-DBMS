@@ -37,7 +37,7 @@ namespace SQLConnection
             // Console.WriteLine("Connection closed.");
             try
             {
-                string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where (Age_Rating != 'T' and Age_Rating != 'M') limit 20";
+                string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where Age_Rating != 'M' limit 20";
                 
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
