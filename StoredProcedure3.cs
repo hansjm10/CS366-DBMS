@@ -14,27 +14,6 @@ namespace SQLConnection
         public void SP3(string connString)
         {
             MySqlConnection conn = new MySqlConnection(connString);
-
-            // try
-            // {
-            //     // Console.WriteLine("Connecting to MySQL...");
-            //     // conn.Open();
-            //     // cmd.Connection = conn;
-            //     // cmd.CommandText = "delimiter $$ drop procedure if exists filterAge17;";
-            //     // cmd.ExecuteNonQuery();
-            //     // cmd.CommandText = "create procedure filterAge17(" +
-            //     //                   "OUT title varchar(255), OUT releaseYear varchar(255), OUT ageRating varchar(255), OUT pub varchar(255), OUT dev varchar(255))" +
-            //     //                   "begin select Title, Release_Year, Age_Rating, Publisher, Developer into title, releaseYear, ageRating, pub, dev from Video_Gameswhere (Age_Rating != ‘M’);" +
-            //     //                   "end $$delimiter ;";
-
-            //     // cmd.ExecuteNonQuery();
-            // }
-            // catch (MySqlException ex)
-            // {
-            //     Console.WriteLine ("Error " + ex.Number + " has occurred: " + ex.Message);
-            // }
-            // conn.Close();
-            // Console.WriteLine("Connection closed.");
             try
             {
                 string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where Age_Rating != 'M' limit 20";

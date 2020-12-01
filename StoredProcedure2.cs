@@ -14,35 +14,6 @@ namespace SQLConnection
         public void SP2(String connString)
         {
             MySqlConnection conn = new MySqlConnection(connString);
-
-            // try
-            // {
-            //     conn.Open();
-            //     String query =  "delimiter $$\n" +
-            //                     "drop procedure if exists filterAge; \n" +
-            //                     "create procedure filterAge\n" +
-            //                         "(OUT title VARCHAR(255)\n," +
-            //                         "OUT releaseYear VARCHAR(255),\n" +
-            //                         "OUT ageRating VARCHAR(255),\n" +
-            //                         "OUT pub VARCHAR(255),\n" +
-            //                         "OUT dev VARCHAR(255))\n" +
-            //                     "begin\n" +  
-            //                         "select\n" + 
-            //                             "Title, Release_Year, Age_Rating, Publisher, Developer into title, releaseYear, ageRating, pub, dev\n" +
-            //                             "from Video_Games where (Age_Rating != 'T') and (Age_Rating != 'M');\n" +
-            //                     "end $$\n" +
-            //                     "delimiter ;";
-            //     Console.WriteLine(query);
-            //     MySqlCommand cmd = new MySqlCommand(query,conn);
-            //     cmd.ExecuteNonQuery();
-            //     Console.WriteLine("Executed Successfully");
-            // }
-            // catch (MySqlException ex)
-            // {
-            //     Console.WriteLine ("Error " + ex.Number + " has occurred: " + ex.Message);
-            // }
-            // conn.Close();
-            // Console.WriteLine("Connection closed.");
             try
             {
                 Console.WriteLine("Connecting to MySQL...");
