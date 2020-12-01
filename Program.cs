@@ -10,7 +10,7 @@ namespace SQLConnection
             String password = "jh4570";
             String server = "washington.uww.edu";
             String database = "cs366-2207_hansjm10";
-             String connString = "Server="+server + ";" + "Database=" + database + ";" + "User ID=" + netID + ";" + "Password=" + password;
+             string connString = "Server="+server + ";" + "Database=" + database + ";" + "User ID=" + netID + ";" + "Password=" + password;
 
             MySqlConnection con = new MySqlConnection(connString);
             
@@ -19,8 +19,10 @@ namespace SQLConnection
             Console.WriteLine("Heyo!");
             Console.WriteLine("Connecting...");
             
-            StoredProcedure2 sp2 = new StoredProcedure2();
-            sp2.SP2(connString);
+            //StoredProcedure2 sp2 = new StoredProcedure2();
+            //sp2.SP2(connString);
+            StoredProcedure3 sp3 = new StoredProcedure3();
+            sp3.SP3(connString);
 
             // try
             // {
