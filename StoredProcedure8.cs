@@ -17,18 +17,25 @@ namespace SQLConnection
 
             try
             {
-                string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where Age_Rating != 'M' limit 20";
+                string queryString = "select s.System_Name, avg(r.Score) as avgsc, sum(r.Num_Reviews) as totrevs" + 
+                                     "from (Made_For s inner join Metacritic_Reviews r on Game_ID) inner join Video_Games g on Game_ID" + 
+                                     "where g.Title = title and g.Game_ID = r.Game_ID and g.Game_ID = s.Game_ID and g.Game_ID in (select p.Game_ID from Prefers where p.User_ID in (select u.User_ID from Users U where u.User_ID = userID))";
                 
+                string title = "";
+                Console.WriteLine("Enter title: ");
+                title = Console.ReadLine();
+
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
 
-                da.SelectCommand = new MySqlCommand("Call filterAge17", conn);
-                da.Fill(ds,"Video_Games");
+                da.SelectCommand = new MySqlCommand("set @title = " + title + ";");
+                da.SelectCommand = new MySqlCommand("Call showInfo", conn);
+                da.Fill(ds,"Video_Games"); //This will have to change.
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)
                 {
-                    Console.WriteLine(dr["Title"] + " " + dr["Release_Year"] + " " + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
+                    Console.WriteLine(dr["System_Name"] + " " + dr["Avg_Score"] + " " + dr["Total_Reviews"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)

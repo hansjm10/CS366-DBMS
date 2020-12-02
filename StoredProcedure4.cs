@@ -19,12 +19,17 @@ namespace SQLConnection
             {
                 string queryString = "select g.Title, g.Release_Year, g.Age_Rating, g.Genre, g.Developer " + 
                                      "from Video_Games g where g.Game_ID in (select m.Game_ID from Made_For m "
-                                     + "where m.System_Name in (select o.System_Name from Owns o where o.SystemOwned = systemOwned));";
+                                     + "where m.System_Name = systemOwned;";
+                
+                string systemInput = "";
+                Console.WriteLine("Enter system owned: ");
+                systemInput = Console.ReadLine();
                 
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
 
+                da.SelectCommand = new MySqlCommand("set @systemOwned = " + systemInput + ";");
                 da.SelectCommand = new MySqlCommand("Call filterSystem", conn);
                 da.Fill(ds,"Video_Games");
                 dt = ds.Tables["Video_Games"];
