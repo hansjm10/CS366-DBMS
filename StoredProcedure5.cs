@@ -17,13 +17,15 @@ namespace SQLConnection
 
             try
             {
-                string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where Age_Rating != 'M' limit 20";
+                string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer into title, releaseYear, ageRating, pub, dev" +
+                                        "from Video_Games" +
+                                        "where (Release_Year >= rY1 and Release_Year < rY2 or (Developer = dev) or (Publisher = pub)";
                 
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
 
-                da.SelectCommand = new MySqlCommand("Call filterAge17", conn);
+                da.SelectCommand = new MySqlCommand("Call filterAnswers", conn);
                 da.Fill(ds,"Video_Games");
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)
