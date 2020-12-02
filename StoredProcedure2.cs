@@ -20,8 +20,6 @@ namespace SQLConnection
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
                 
-                string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where (Age_Rating != 'T' and Age_Rating != 'M') limit 20";
-
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();

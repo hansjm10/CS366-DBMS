@@ -1,22 +1,3 @@
-delimiter $$
-drop procedure if exists filterAge;
-create procedure filterAge
-(OUT title_param VARCHAR(255), 
-OUT releaseYear_param VARCHAR(255),
-OUT ageRating_param VARCHAR(255),
-OUT genre_param VARCHAR(255),
-OUT dev_param VARCHAR(255)) 
-begin 
-select
-v.Title, v.Release_Year, v.Age_Rating, v.Genre, v.Developer 
-into
-title_param, releaseYear_param, ageRating_param, genre_param, dev_param
-from Video_Games v where (v.Age_Rating != 'M') limit 10;
-end $$
-delimiter ;
-
-where (v.Age_Rating != 'T') and (v.Age_Rating != 'M');
-
 drop procedure if exists testTable;
 delimiter $$
 create procedure testTable(
@@ -31,6 +12,16 @@ insert into tmp(Title, Release_Year, Age_Rating, Publisher, Developer)
 select
 v.Title, v.Release_Year, v.Age_Rating, v.Publisher, v.Developer 
 from Video_Games v where (v.Age_Rating != 'T') and (v.Age_Rating != 'M');
+end $$
+delimiter ;
+
+delimiter $$
+drop procedure if exists getUserCred;
+create procedure getUserCred(IN userID_p varchar(255))
+begin
+select*
+from Users
+where User_ID = userID;
 end $$
 delimiter ;
 
@@ -62,8 +53,35 @@ from Video_Games g where g.Game_ID in (select m.Game_ID from Made_For m where m.
 end $$
 delimiter ;
 
+delimiter $$
+drop procedure if exists filterAnswers;
+create procedure filterAnswers(IN rY1 varchar(255), IN rY2 varchar(255),
+IN ageRating_p varchar(255), IN gen_p varchar(255), IN dev_p varchar(255))
+begin
+select Title, Release_Year, Age_Rating, Genre, Developer  
+from Video_Games 
+where (Release_Year >= rY1 and ReleaseYear < rY2) or
+(Developer = dev) or (Publisher = pub);
+end $$
+delimiter ;
 
 
+delimiter $$
+drop procedure if exists finalOutput;
+create procedure showPreferences(IN systemName_p varchar(255),
+IN ageRating_p varchar(255), IN gen_p varchar(255),
+IN dev_p varchar(255))
+begin
+select g.Title, s.System_Name, g.Release_Year, g.Age_Rating,
+g.Genre, g.Developer, avg(r.Score) as avgScore,
+sum(r.Num_Reviews) as totalReviews
+from Video_Games g
+inner join Metacritic_Review r on r.Game_ID = g.Game_ID
+inner join Made_For s on s.Game_ID = g.Game_ID 
+where g.Game_ID = r.Game_ID and g.Game_ID = s.Game_ID
+order by averageScore desc limit 10;
+end $$
+delimiter ;
 
 
 drop procedure if exists showPreferences;
@@ -89,5 +107,21 @@ inner join Metacritic_Review r on r.Game_ID = g.Game_ID
 inner join Made_For s on s.Game_ID = g.Game_ID
 where g.Game_ID in(select p.Game_ID from Prefers p where p.User_ID in 
 (select u.User_ID from Users u where u.User_ID = userID_p));
+end $$
+delimiter ;
+
+delimiter $$
+drop procedure if exists filterPreferences;
+create procedure filterPreferences(IN userID_p varchar(255), 
+IN rY1_p varchar(255), IN rY2_p varchar(255), 
+IN ageRating_p varchar(255), IN gen_p varchar(255), IN dev_p varchar(255))
+begin
+select g.Title, g.Release_Year, g.Age_Rating, g.Genre, g.Developer
+from Video_Games g 
+where ((g.Release_Year >= rY1 and g.Release_Year < rY2) or
+(g.Developer = dev) or (g.Genre = gen)) and 
+g.Game_ID not in (select p.Game_ID from Prefers where 
+p.User_ID in (select u.User_ID from Users u where 
+u.User_ID = userID));
 end $$
 delimiter ;
