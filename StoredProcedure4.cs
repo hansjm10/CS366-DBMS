@@ -28,7 +28,9 @@ namespace SQLConnection
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
-
+                //I don't believe SelectCommand works like this, I believe it is just one query that needs to be
+                //Sent through. It is only for initiating stored procedures.
+                //We could try setting Parameters.AddWithValue(@SystemOwned,systemInput) and then ExecutingNonQuery() like how the original example did it.
                 da.SelectCommand = new MySqlCommand("set @systemOwned = " + systemInput + ";");
                 da.SelectCommand = new MySqlCommand("Call filterSystem", conn);
                 da.Fill(ds,"Video_Games");
