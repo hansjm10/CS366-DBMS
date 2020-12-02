@@ -9,30 +9,39 @@ using MySql.Data.MySqlClient;
 
 namespace SQLConnection
 {
-    class PStoredProcedure4
+    class StoredProcedure4
     {
         public void SP4(string connString)
         {
             MySqlConnection conn = new MySqlConnection(connString);
 
             try
-            {
-                string queryString = "select g.Title, g.Release_Year, g.Age_Rating, g.Genre, g.Developer " + 
-                                     "from Video_Games g where g.Game_ID in (select m.Game_ID from Made_For m "
-                                     + "where m.System_Name = systemOwned;";
-                
-                string systemInput = "";
+            {   
+                conn.Open();     
                 Console.WriteLine("Enter system owned: ");
-                systemInput = Console.ReadLine();
+                string systemInput = Console.ReadLine();
                 
-                MySqlDataAdapter da = new MySqlDataAdapter();
+                MySqlDataAdapter da;
+                MySqlCommand command = new MySqlCommand();
+                MySqlParameter param;
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
                 //I don't believe SelectCommand works like this, I believe it is just one query that needs to be
                 //Sent through. It is only for initiating stored procedures.
                 //We could try setting Parameters.AddWithValue(@SystemOwned,systemInput) and then ExecutingNonQuery() like how the original example did it.
-                da.SelectCommand = new MySqlCommand("set @systemOwned = " + systemInput + ";");
-                da.SelectCommand = new MySqlCommand("Call filterSystem", conn);
+
+                command.Connection = conn;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "filterSystem";
+
+                param = new MySqlParameter("@systemOwned_p", systemInput);
+
+                param.Direction = ParameterDirection.Input;
+                param.DbType = DbType.String;
+                command.Parameters.Add(param);
+
+                da = new MySqlDataAdapter(command);
+
                 da.Fill(ds,"Video_Games");
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)

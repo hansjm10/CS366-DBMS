@@ -21,8 +21,10 @@ namespace SQLConnection
             
             //StoredProcedure2 sp2 = new StoredProcedure2();
             //sp2.SP2(connString);
-            StoredProcedure3 sp3 = new StoredProcedure3();
-            sp3.SP3(connString);
+            // StoredProcedure3 sp3 = new StoredProcedure3();
+            // sp3.SP3(connString);
+            StoredProcedure4 sp4 = new StoredProcedure4();
+            sp4.SP4(connString);
 
             // try
             // {
