@@ -9,7 +9,8 @@ using MySql.Data.MySqlClient;
 
 namespace SQLConnection
 {
-    class StoredProcedure2
+    //Test
+        class StoredProcedure2
     {
         public void SP2(String connString)
         {
@@ -20,7 +21,7 @@ namespace SQLConnection
                 conn.Open();
                 
                 string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where (Age_Rating != 'T' and Age_Rating != 'M') limit 20";
-                
+
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
