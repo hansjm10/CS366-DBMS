@@ -16,8 +16,6 @@ namespace SQLConnection
             MySqlConnection conn = new MySqlConnection(connString);
             try
             {
-                string queryString = "Select Title, Release_Year, Age_Rating, Genre, Developer from Video_Games where Age_Rating != 'M' limit 20";
-                
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
