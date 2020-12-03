@@ -68,9 +68,7 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists finalOutput;
-create procedure showPreferences(IN systemName_p varchar(255),
-IN ageRating_p varchar(255), IN gen_p varchar(255),
-IN dev_p varchar(255))
+create procedure showPreferences()
 begin
 select g.Title, s.System_Name, g.Release_Year, g.Age_Rating,
 g.Genre, g.Developer, avg(r.Score) as avgScore,
@@ -79,7 +77,7 @@ from Video_Games g
 inner join Metacritic_Review r on r.Game_ID = g.Game_ID
 inner join Made_For s on s.Game_ID = g.Game_ID 
 where g.Game_ID = r.Game_ID and g.Game_ID = s.Game_ID
-order by averageScore desc limit 10;
+order by avgScore desc limit 10;
 end $$
 delimiter ;
 
