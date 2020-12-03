@@ -83,7 +83,7 @@ delimiter $$
 create procedure showInfo(
     IN userID_p varchar(255))
 begin select
-s.System_Name, sum(r.Num_of_Reviews) as totrevs
+s.System_Name, sum(r.Num_of_Reviews) as totrevs, avg(r.Score) as avgrevs
 from Video_Games g
 inner join Metacritic_Review r on r.Game_ID = g.Game_ID
 inner join Made_For s on s.Game_ID = g.Game_ID
