@@ -55,13 +55,13 @@ delimiter ;
 
 delimiter $$
 drop procedure if exists filterAnswers;
-create procedure filterAnswers(IN rY1 varchar(255), IN rY2 varchar(255),
+create procedure filterAnswers(IN rY1_p varchar(255), IN rY2_p varchar(255),
 IN ageRating_p varchar(255), IN gen_p varchar(255), IN dev_p varchar(255))
 begin
 select Title, Release_Year, Age_Rating, Genre, Developer  
 from Video_Games 
-where (Release_Year >= rY1 and ReleaseYear < rY2) or
-(Developer = dev) or (Publisher = pub);
+where (Release_Year >= rY1_p and ReleaseYear < rY2_p) and
+(Age_Rating = ageRating_p) and (Developer = dev_P) and (Genre = gen_p);
 end $$
 delimiter ;
 

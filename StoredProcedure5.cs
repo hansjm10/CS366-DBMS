@@ -75,8 +75,7 @@ namespace SQLConnection
                 foreach (DataRow dr in dt.Rows)
                 {
                     Console.WriteLine(dr["Title"] + " " + dr["Release_Year"] + " " +
-                    dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
-                    dr["avgScore"] + " " + dr["totalReviews"]);
+                    dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)

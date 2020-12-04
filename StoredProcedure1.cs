@@ -38,6 +38,7 @@ namespace SQLConnection
                 param.DbType = DbType.String;
                 command.Parameters.Add(param);
                 
+                da = new MySqlDataAdapter(command);
                 da.Fill(ds,"Users");
                 dt = ds.Tables["Users"];
                 foreach (DataRow dr in dt.Rows)
