@@ -21,7 +21,7 @@ create procedure getUserCred(IN userID_p varchar(255))
 begin
 select*
 from Users
-where User_ID = userID;
+where User_ID = userID_p;
 end $$
 delimiter ;
 

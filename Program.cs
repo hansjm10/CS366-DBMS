@@ -14,9 +14,6 @@ namespace SQLConnection
 
             MySqlConnection con = new MySqlConnection(connString);
             
-
-            //Test adding a line.
-            Console.WriteLine("Heyo!");
             Console.WriteLine("Connecting...");
             
             //StoredProcedure2 sp2 = new StoredProcedure2();
@@ -31,8 +28,8 @@ namespace SQLConnection
             //    sp8.SP8(connString);
             // StoredProcedure1 sp1 = new StoredProcedure1();
             // sp1.SP1(connString);
-            StoredProcedure5 sp5 = new StoredProcedure5();
-            sp5.SP5(connString);
+            // StoredProcedure5 sp5 = new StoredProcedure5();
+            //sp5.SP5(connString);
 
             // try
             // {

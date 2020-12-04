@@ -11,8 +11,9 @@ namespace SQLConnection
 {
     class StoredProcedure1
     {
-        public void SP1(string connString)
+        public Tuple<string, string, string> SP1(string connString)
         {
+            string uID_return = "", userName = "", userAge = "";
             MySqlConnection conn = new MySqlConnection(connString);
             try
             {
@@ -43,7 +44,9 @@ namespace SQLConnection
                 dt = ds.Tables["Users"];
                 foreach (DataRow dr in dt.Rows)
                 {
-                    Console.WriteLine(dr["User_ID"] + " " + dr["User_Name"] + " " + dr["Age"] + " " + dr["Genre"] + " " + dr["Developer"]);
+                    uID_return = Convert.ToString(dr["User_ID"]);
+                    userName = Convert.ToString(dr["User_Name"]);
+                    userAge = Convert.ToString(dr["Age"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -52,6 +55,7 @@ namespace SQLConnection
             }
             conn.Close();
             Console.WriteLine("Done.");
+            return new Tuple<string, string, string> (uID_return, userName, userAge);
         }
     }
 }
