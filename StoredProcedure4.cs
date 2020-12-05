@@ -23,14 +23,20 @@ namespace SQLConnection
                 systemInput = Console.ReadLine();
                 
                 MySqlDataAdapter da = new MySqlDataAdapter();
+                MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
-                //I don't believe SelectCommand works like this, I believe it is just one query that needs to be
-                //Sent through. It is only for initiating stored procedures.
-                //We could try setting Parameters.AddWithValue(@SystemOwned,systemInput) and then ExecutingNonQuery() like how the original example did it.
-                cmd.Parameters.AddWithValue("@systemOwned", systemInput);
-                cmd.ExecuteNonQuery();
-                da.SelectCommand = new MySqlCommand("Call filterSystem", conn);
+                MySqlParameter param;
+                
+                command.Connection = conn;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "filerSystem";
+                
+                param = new MySqlParameter("@systemOwned_p", systemInput);
+                param.Direction = ParameterDirection.Input;
+                param.DbType = DbType.String;
+                command.Parameters.Add(param);
+
                 da.Fill(ds,"Video_Games");
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)
