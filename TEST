@@ -15,8 +15,8 @@ from Video_Games v where (v.Age_Rating != 'T') and (v.Age_Rating != 'M');
 end $$
 delimiter ;
 
-delimiter $$
 drop procedure if exists getUserCred;
+delimiter $$
 create procedure getUserCred(IN userID_p varchar(255))
 begin
 select*
@@ -25,35 +25,41 @@ where User_ID = userID_p;
 end $$
 delimiter ;
 
-//Can get rid of limit once we know it works.
+//Filters out M-Rated games for users between 13 and 17; can get rid of limit once we know SP works.
 drop procedure if exists filterAge17;
+drop temporary table if exists VG_AgeFiltered;
 delimiter $$
 create procedure filterAge17()
 begin
+create temporary table VG_AgeFiltered
 select* 
-from Video_Games v 
-where (v.Age_Rating != 'M') limit 10; 
+from Video_Games g 
+where (g.Age_Rating != 'M') limit 10; 
 end $$
 delimiter ;
 
-//Can get rid of limit once we know it works.
+//Filters out T-rated and M-rated games for users under 13; can get rid of limit once we know SP works.
 drop procedure if exists filterAge13;
+drop temporary table if exists VG_AgeFiltered;
 delimiter $$
 create procedure filterAge13()
 begin
+create temporary table VG_AgeFiltered
 select* 
 from Video_Games g 
 where (g.Age_Rating != T) and (g.Age_Rating != 'M') limit 10;
 end $$
 delimiter ;
 
-//Can get rid of limit once we know it works.
+//Filters out systems the user doesn't own; can get rid of limit once we know SP works.
 drop procedure if exists filterSystem;
+drop temporary table if exists VG_AgeandSystemFiltered;
 delimiter $$
 create procedure filterSystem(IN systemOwned_p varchar(255))
 begin 
+create temporary table VG_AgeandSystemFiltered
 select* 
-from Video_Games g 
+from VG_AgeFiltered g 
 where g.Game_ID in (select m.Game_ID from Made_For m where m.System_Name = systemOwned_p) limit 10;
 end $$
 delimiter ;
@@ -61,11 +67,13 @@ delimiter ;
 //Can get rid of limit once we know it works.
 delimiter $$
 drop procedure if exists filterAnswers;
+drop temporary table if exists VG_AllFiltered
 create procedure filterAnswers(IN rY1_p bigint, IN rY2_p bigint, 
 IN gen_p varchar(255), IN dev_p varchar(255))
 begin
+create temporary table VG_AllFiltered
 select*  
-from Video_Games g
+from VG_AgeandSystemFiltered g
 where (g.Release_Year >= rY1_p and g.ReleaseYear < rY2_p) or 
 (Developer = dev_P) or (Genre = gen_p) limit 10;
 end $$
@@ -78,7 +86,7 @@ begin
 select g.Title, s.System_Name, g.Release_Year, g.Age_Rating,
 g.Genre, g.Developer, avg(r.Score) as avgScore,
 sum(r.Num_Reviews) as totalReviews
-from Video_Games g
+from VG_AllFiltered g
 inner join Metacritic_Review r on r.Game_ID = g.Game_ID
 inner join Made_For s on s.Game_ID = g.Game_ID 
 where g.Game_ID = r.Game_ID and g.Game_ID = s.Game_ID
@@ -97,6 +105,7 @@ p.User_ID in (select u.User_ID from Users u where u.User_ID = userID_p));
 end $$
 delimiter ;
 
+// Shows system and review info for items in Preferences List on Preferences Screen.
 drop procedure if exists showInfo;
 delimiter $$
 create procedure showInfo(IN userID_p varchar(255), IN title_p varchar(255))
@@ -111,6 +120,7 @@ g.Game_ID in(select p.Game_ID from Prefers p where p.User_ID in
 end $$
 delimiter ;
 
+// Skips the questionnaire process and shows final output based on Preferences List.
 delimiter $$
 drop procedure if exists filterPreferences;
 create procedure filterPreferences(IN userID_p varchar(255), IN system_p varchar(255)

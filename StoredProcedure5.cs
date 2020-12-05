@@ -64,9 +64,9 @@ namespace SQLConnection
                 command.Parameters.Add(param4);
 
                 da = new MySqlDataAdapter(command);
-                da.Fill(ds,"Video_Games"); 
-                dt = ds.Tables["Video_Games"];
-                foreach (DataRow dr in dt.Rows)
+                da.Fill(ds,"VG_AllFiltered"); 
+                dt = ds.Tables["VG_AllFiltered"];
+                foreach (DataRow dr in dt.Rows)//Once we know this works, we can get rid of this loop.
                 {
                     Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
                                     + " " + dr["Genre"] + " " + dr["Developer"]);

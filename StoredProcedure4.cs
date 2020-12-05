@@ -37,9 +37,9 @@ namespace SQLConnection
                 param.DbType = DbType.String;
                 command.Parameters.Add(param);
 
-                da.Fill(ds,"Video_Games");
-                dt = ds.Tables["Video_Games"];
-                foreach (DataRow dr in dt.Rows)
+                da.Fill(ds,"VG_AgeandSystemFiltered");
+                dt = ds.Tables["VG_AgeandSystemFiltered"];
+                foreach (DataRow dr in dt.Rows)//Once we know the SP works, we can get rid of this loop.
                 {
                     Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
                                     + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);

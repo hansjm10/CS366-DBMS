@@ -25,8 +25,8 @@ namespace SQLConnection
                 DataTable dt = new DataTable();
 
                 da.SelectCommand = new MySqlCommand("Call filterAge13", conn);
-                da.Fill(ds,"Video_Games");
-                dt = ds.Tables["Video_Games"];
+                da.Fill(ds,"VG_AgeFiltered");
+                dt = ds.Tables["VG_AgeFiltered"];
                 foreach (DataRow dr in dt.Rows) //Once we know SP works, we can get rid of this loop.
                 {
                     Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 

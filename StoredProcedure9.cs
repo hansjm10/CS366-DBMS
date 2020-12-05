@@ -81,8 +81,8 @@ namespace SQLConnection
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"Video_Games"); 
                 dt = ds.Tables["Video_Games"];
-                foreach (DataRow dr in dt.Rows)
-                {
+                foreach (DataRow dr in dt.Rows)//Once we know this works, we'll probably want to convert this
+                {                              //loop to a datatable/dataframe/matrix/whatever and return that.
                     Console.WriteLine(dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
                     dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
                     dr["avgScore"] + " " + dr["totalReviews"]);
