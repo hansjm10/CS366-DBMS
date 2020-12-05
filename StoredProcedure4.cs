@@ -9,9 +9,9 @@ using MySql.Data.MySqlClient;
 
 namespace SQLConnection
 {
-    class PStoredProcedure4
+    class filterBySystem
     {
-        public void SP4(string connString)
+        public void filerSystem(string connString)
         {
             MySqlConnection conn = new MySqlConnection(connString);
             MySqlCommand cmd = new MySqlCommand();
@@ -41,7 +41,8 @@ namespace SQLConnection
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)
                 {
-                    Console.WriteLine(dr["Title"] + " " + dr["Release_Year"] + " " + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
+                    Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
+                                    + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)

@@ -9,9 +9,9 @@ using MySql.Data.MySqlClient;
 
 namespace SQLConnection
 {
-    class StoredProcedure1
+    class getUserCredentials
     {
-        public Tuple<string, string, string> SP1(string connString)
+        public Tuple<string, string, string> getUserCred(string connString)
         {
             string uID_return = "", userName = "", userAge = "";
             MySqlConnection conn = new MySqlConnection(connString);

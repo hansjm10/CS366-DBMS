@@ -9,9 +9,9 @@ using MySql.Data.MySqlClient;
 
 namespace SQLConnection
 {
-    class StoredProcedure3
+    class filterM
     {
-        public void SP3(string connString)
+        public void filterAge17(string connString)
         {
             MySqlConnection conn = new MySqlConnection(connString);
             try
@@ -25,7 +25,8 @@ namespace SQLConnection
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows) //Once we know SP works, we can get rid of this loop.
                 {
-                    Console.WriteLine(dr["Title"] + " " + dr["Release_Year"] + " " + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
+                    Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
+                                    + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)

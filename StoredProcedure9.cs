@@ -9,9 +9,9 @@ using MySql.Data.MySqlClient;
 
 namespace SQLConnection
 {
-    class StoredProcedure9
+    class finalOutputFromPreferences
     {
-        public void SP9(string connString)
+        public void filterPreferences(string connString)
         {
            MySqlConnection conn = new MySqlConnection(connString);
 
