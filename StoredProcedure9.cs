@@ -83,8 +83,9 @@ namespace SQLConnection
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)
                 {
-                    Console.WriteLine(dr["Title"] + " " + dr["Release_Year"] + " " +
-                    dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
+                    Console.WriteLine(dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
+                    dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
+                    dr["avgScore"] + " " + dr["totalReviews"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)

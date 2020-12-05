@@ -35,7 +35,6 @@ namespace SQLConnection
                 MySqlParameter param2;
                 MySqlParameter param3;
                 MySqlParameter param4;
-                MySqlParameter param5;
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
 
@@ -45,9 +44,8 @@ namespace SQLConnection
 
                 param = new MySqlParameter("@rY1_p", rY1);
                 param2 = new MySqlParameter("@rY2_p", rY2);
-                param3 = new MySqlParameter("@ageRating_p", ageRating);
-                param4 = new MySqlParameter("@gen_p", gen);
-                param5 = new MySqlParameter("@dev_p", dev);
+                param3 = new MySqlParameter("@gen_p", gen);
+                param4 = new MySqlParameter("@dev_p", dev);
 
                 param.Direction = ParameterDirection.Input;
                 param.DbType = DbType.String;
@@ -64,10 +62,6 @@ namespace SQLConnection
                 param4.Direction = ParameterDirection.Input;
                 param4.DbType = DbType.String;
                 command.Parameters.Add(param4);
-                
-                param5.Direction = ParameterDirection.Input;
-                param5.DbType = DbType.String;
-                command.Parameters.Add(param5);
 
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"Video_Games"); 
@@ -75,7 +69,7 @@ namespace SQLConnection
                 foreach (DataRow dr in dt.Rows)
                 {
                     Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
-                                    + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
+                                    + " " + dr["Genre"] + " " + dr["Developer"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)

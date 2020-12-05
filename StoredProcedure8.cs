@@ -43,8 +43,7 @@ namespace SQLConnection
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)
                 {
-                    Console.WriteLine(dr["System_Name"] + " " + dr["totrevs"] + " " +
-                    dr["avgrevs"]);
+                    Console.WriteLine(dr["System_Name"] + " " + dr["totrevs"] + " " + dr["avgrevs"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
