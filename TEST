@@ -142,3 +142,14 @@ u.User_ID = userID_p))
 order by desc avgScore limit 10;
 end $$
 delimiter ;
+
+
+delimiter $$
+drop procedure if exists registerUser;
+create procedure registerUser(IN userID_p varchar(255),
+IN Username_p varchar(255), IN age_p bigint))
+begin
+INSERT INTO Users VALUES (userID_p,
+Username_p, age_p);
+end $$
+delimiter ;
