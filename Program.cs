@@ -18,9 +18,16 @@ namespace SQLConnection
             Console.WriteLine("Connecting...");
             con.Open();
 
+            //Declares class variables for classes that access the stored procedures.
             getUserCredentials sp1 = new getUserCredentials();
             filterTandM sp2 = new filterTandM();
             filterM sp3 = new filterM();
+            filterBySystem sp4 = new filterBySystem();
+            filterByAnswers sp5 = new filterByAnswers();
+            finalGamesOutput sp6 = new finalGamesOutput();
+            showPrefsList sp7 = new showPrefsList();
+            showMoreInfo sp8 = new showMoreInfo();
+            finalOutputFromPreferences sp9 = new finalOutputFromPreferences();
             
             //Login System
             Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
@@ -84,8 +91,14 @@ namespace SQLConnection
             
             //Questionnaire
             Console.WriteLine("Which system would you like to look at games for?");
-            Console.WriteLine("Enter system: ");
-            
+            Console.WriteLine("Enter system (for a list of valid inputs, enter 'I'): ");
+            string systemInput = Console.ReadLine();
+            if (systemInput == "Valid"){//Will need an efficient way to check if input is valid.
+                sp4.filerSystem(connString);
+            }
+            else if (systemInput == "I"){
+
+            }
             //Final Output Screen
 
             //Preferences List
