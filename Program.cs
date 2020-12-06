@@ -76,7 +76,7 @@ namespace SQLConnection
 
             //Preferences List
 
-
+            con.Close();
             Console.Read();
         }
     }
