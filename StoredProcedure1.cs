@@ -11,9 +11,9 @@ namespace SQLConnection
 {
     class getUserCredentials
     {
-        public Tuple<string, string, string> getUserCred(string connString)
+        public Tuple<string, string, string> getUserCred(string connString, string userID)
         {
-            string uID_return = "", userName = "", userAge = "";
+            string uID_return = "", userName_return = "", userAge = "";
             MySqlConnection conn = new MySqlConnection(connString);
             try
             {
@@ -21,9 +21,6 @@ namespace SQLConnection
                 
                 
                 conn.Open();
-                Console.WriteLine("Enter user ID: ");
-                string userID = Console.ReadLine();
-                
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();
@@ -45,7 +42,7 @@ namespace SQLConnection
                 foreach (DataRow dr in dt.Rows)
                 {
                     uID_return = Convert.ToString(dr["User_ID"]);
-                    userName = Convert.ToString(dr["User_Name"]);
+                    userName_return = Convert.ToString(dr["User_Name"]);
                     userAge = Convert.ToString(dr["Age"]);
                 }
             }
@@ -55,7 +52,7 @@ namespace SQLConnection
             }
             conn.Close();
             Console.WriteLine("Done.");
-            return new Tuple<string, string, string> (uID_return, userName, userAge);
+            return new Tuple<string, string, string> (uID_return, userName_return, userAge);
         }
     }
 }

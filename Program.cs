@@ -10,13 +10,16 @@ namespace SQLConnection
             String password = "jh4570";
             String server = "washington.uww.edu";
             String database = "cs366-2207_hansjm10";
-             string connString = "Server="+server + ";" + "Database=" + database + ";" + "User ID=" + netID + ";" + "Password=" + password;
+            string connString = "Server="+server + ";" + "Database=" + database + ";" + "User ID=" + netID + ";" + "Password=" + password;
 
             MySqlConnection con = new MySqlConnection(connString);
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
             Console.WriteLine("Connecting...");
             con.Open();
+
+            getUserCredentials sp1 = new getUserCredentials();
+            
             //Login System
             Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
             string loginSelect = Console.ReadLine();
@@ -38,12 +41,24 @@ namespace SQLConnection
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("Welcome, " + userName + "!");
             }
-            else if (loginSelect == "2"){
+            else if (loginSelect == "2"){ //Login for existing users.
                 Console.WriteLine("Please enter your username and password.");
                 Console.WriteLine("Enter username: ");
                 userName = Console.ReadLine();
                 Console.WriteLine("Enter password: ");
                 userID = Console.ReadLine();
+                Tuple<string, string, string> userCreds = sp1.getUserCred(connString, userID);
+                bool loginCorrect = false;
+                while (loginCorrect == false){
+                    if (userID == userCreds.Item1 && userName == userCreds.Item2){
+                        Console.WriteLine("Welcome back, " + userName + "!");
+                        loginCorrect = true;
+                    }
+                    else{
+                        Console.WriteLine("Login failed. Try again.");
+                    } 
+                }
+
             }
             else{
                 Console.WriteLine("Invalid input, try again.");
