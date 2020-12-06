@@ -29,13 +29,8 @@ namespace SQLConnection
                 command.CommandText = "filterAge13";
 
                 da = new MySqlDataAdapter(command);
-                da.Fill(ds,"Video_Games");
-                dt = ds.Tables["Video_Games"];
-                foreach (DataRow dr in dt.Rows) //Once we know SP works, we can get rid of this loop.
-                {
-                    Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
-                                    + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
-                }
+                da.Fill(ds,"VG_AgeFiltered");
+                dt = ds.Tables["VG_AgeFiltered"];
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
