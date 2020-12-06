@@ -27,11 +27,11 @@ namespace SQLConnection
             int userAge;
             if (loginSelect == "1"){ //New user registration.
                 Console.WriteLine("Please enter your username, password, and age.");
-                Console.WriteLine("Enter username: ");
+                Console.Write("Enter username: ");
                 userName = Console.ReadLine();
-                Console.WriteLine("Enter password: ");
+                Console.Write("Enter password: ");
                 userID = Console.ReadLine();
-                Console.WriteLine("Enter age: ");
+                Console.Write("Enter age: ");
                 inputAge = Console.ReadLine();
                 Int32.TryParse(inputAge, out userAge);
                 cmd.CommandText = "INSERT INTO Users(User_ID,User_Name,Age) VALUES(?User_ID,?User_Name,?Age)";
@@ -43,9 +43,9 @@ namespace SQLConnection
             }
             else if (loginSelect == "2"){ //Login for existing users.
                 Console.WriteLine("Please enter your username and password.");
-                Console.WriteLine("Enter username: ");
+                Console.Write("Enter username: ");
                 userName = Console.ReadLine();
-                Console.WriteLine("Enter password: ");
+                Console.Write("Enter password: ");
                 userID = Console.ReadLine();
                 Tuple<string, string, string> userCreds = sp1.getUserCred(connString, userID);
                 bool loginCorrect = false;
@@ -72,7 +72,7 @@ namespace SQLConnection
 
             //Preferences List
 
-
+            con.Close();
             Console.Read();
         }
     }

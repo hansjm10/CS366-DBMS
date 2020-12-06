@@ -17,10 +17,7 @@ namespace SQLConnection
             MySqlConnection conn = new MySqlConnection(connString);
             try
             {
-                Console.WriteLine("Connecting to MySQL...");
                 
-                
-                conn.Open();
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();
@@ -50,8 +47,6 @@ namespace SQLConnection
             {
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            conn.Close();
-            Console.WriteLine("Done.");
             return new Tuple<string, string, string> (uID_return, userName_return, userAge);
         }
     }
