@@ -19,12 +19,14 @@ namespace SQLConnection
             con.Open();
 
             getUserCredentials sp1 = new getUserCredentials();
+            filterTandM sp2 = new filterTandM();
+            filterM sp3 = new filterM();
             
             //Login System
             Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
             string loginSelect = Console.ReadLine();
             string userName, userID, inputAge; 
-            int userAge;
+            int userAge = 0;
             bool loggedIn = false;
             while(loggedIn == false){
                 if (loginSelect == "1"){ //New user registration.
@@ -60,7 +62,9 @@ namespace SQLConnection
                         else{
                             Console.WriteLine("Login failed. Try again.");
                         }
-                    } 
+                    }
+                    userAge = Convert.ToInt32(userCreds.Item3);
+                    loggedIn = true; 
                 }
                 else {
                     Console.WriteLine("Invalid input, try again.");
@@ -68,10 +72,19 @@ namespace SQLConnection
                 }
             }
         
-
+            //Filter by age
+            if(userAge < 13){
+                Console.WriteLine("Strict parental controls enabled. Only games rated E and E10+ will be reccomended to you.");
+                sp2.filterAge13(connString);
+            }
+            else if(userAge >= 13 && userAge < 17){
+                Console.WriteLine("Moderate parental controls enabled. No M-rated games will be reccomended to you.");
+                sp3.filterAge17(connString);
+            }
+            
             //Questionnaire
-
-
+            
+            
             //Final Output Screen
 
             //Preferences List
