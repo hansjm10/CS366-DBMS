@@ -16,22 +16,34 @@ namespace SQLConnection
             
             Console.WriteLine("Connecting...");
             
-            //StoredProcedure2 sp2 = new StoredProcedure2();
-            //sp2.SP2(connString);
-            
+            //Login System
+            Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
+            string loginSelect = Console.ReadLine();
+            string userName, userID, inputAge; 
+            int userAge;
+            if (loginSelect == "1"){
+                Console.WriteLine("Please enter your username, password, and age.");
+                userName = Console.ReadLine();
+                userID = Console.ReadLine();
+                inputAge = Console.ReadLine();
+                Int32.TryParse(inputAge, out userAge);
+            }
+            else if (loginSelect == "2"){
+                
+            }
+            else{
+                Console.WriteLine("Invalid input, try again.");
+                loginSelect = Console.ReadLine();
+            }
+        
 
-            // try
-            // {
-            //     con.Open();
-            //     Console.WriteLine("Connection Succesful");
-            //     var cmd = new MySqlCommand(stm, con);
-            //     var version  = cmd.ExecuteScalar().ToString();
-            //     Console.WriteLine(version);
-            // }
-            // catch (Exception e)
-            // {
-            //     Console.WriteLine("Error: " + e.Message);
-            // }
+            //Questionnaire
+
+            //Final Output Screen
+
+            //Preferences List
+
+
             Console.Read();
         }
     }
