@@ -14,9 +14,9 @@ namespace SQLConnection
 
             MySqlConnection con = new MySqlConnection(connString);
             MySqlCommand cmd = new MySqlCommand();
-            
+            cmd.Connection = con;
             Console.WriteLine("Connecting...");
-            
+            con.Open();
             //Login System
             Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
             string loginSelect = Console.ReadLine();
