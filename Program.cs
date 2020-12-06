@@ -83,7 +83,8 @@ namespace SQLConnection
             }
             
             //Questionnaire
-            
+            Console.WriteLine("Which system would you like to look at games for?");
+            Console.WriteLine("Enter system: ");
             
             //Final Output Screen
 
