@@ -18,15 +18,19 @@ namespace SQLConnection
             try
             {
                 Console.WriteLine("Connecting to MySQL...");
-                conn.Open();
                 
                 MySqlDataAdapter da = new MySqlDataAdapter();
+                MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
+                
+                command.Connection = conn;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "filterAge13";
 
-                da.SelectCommand = new MySqlCommand("Call filterAge13", conn);
-                da.Fill(ds,"VG_AgeFiltered");
-                dt = ds.Tables["VG_AgeFiltered"];
+                da = new MySqlDataAdapter(command);
+                da.Fill(ds,"Video_Games");
+                dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows) //Once we know SP works, we can get rid of this loop.
                 {
                     Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 

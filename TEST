@@ -38,16 +38,37 @@ where (g.Age_Rating != 'M') limit 10;
 end $$
 delimiter ;
 
+drop procedure if exists filterAge17;
+delimiter $$
+create procedure filterAge17()
+begin
+select* 
+from Video_Games g 
+where (g.Age_Rating != 'M') limit 10; 
+end $$
+delimiter ;
+
 //Filters out T-rated and M-rated games for users under 13; can get rid of limit once we know SP works.
 drop procedure if exists filterAge13;
-drop temporary table if exists VG_AgeFiltered;
 delimiter $$
 create procedure filterAge13()
 begin
 create temporary table VG_AgeFiltered
 select* 
 from Video_Games g 
-where (g.Age_Rating != T) and (g.Age_Rating != 'M') limit 10;
+where (g.Age_Rating != 'T') and (g.Age_Rating != 'M') limit 10;
+end $$
+delimiter ;
+drop temporary table if exists VG_AgeFiltered;
+
+
+drop procedure if exists filterAge13;
+delimiter $$
+create procedure filterAge13()
+begin
+select* 
+from Video_Games g 
+where (g.Age_Rating != 'T') and (g.Age_Rating != 'M') limit 10;
 end $$
 delimiter ;
 
@@ -148,8 +169,8 @@ delimiter $$
 drop procedure if exists registerUser;
 create procedure registerUser(IN userID_p varchar(255),
 IN Username_p varchar(255), IN age_p bigint))
+as
 begin
-INSERT INTO Users VALUES (userID_p,
-Username_p, age_p);
+INSERT INTO Users VALUES (@userID_p,@Username_p, @age_p);
 end $$
 delimiter ;
