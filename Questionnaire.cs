@@ -42,9 +42,18 @@ namespace SQLConnection
                         cmd.Connection = conn;
                         cmd.CommandText = "select * from Systems";
                         cmd.ExecuteNonQuery();
+                        daSystems.Fill(dsSystems,"Systems");
+                        dt = dsSystems.Tables["Systems"];
+                        Console.WriteLine("\nList of Systems:");
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Console.WriteLine(dr["System_Name"]);
+                        }
+                        Console.WriteLine("");
                     }
                     else{
                         Console.WriteLine("Input is invalid. Try again.");
+                        continue;
                     }
                 }
 
@@ -65,6 +74,7 @@ namespace SQLConnection
                     }
                     else {
                         Console.WriteLine("Input is invalid. Try again.");
+                        continue;
                     }
                 }
 
@@ -81,9 +91,18 @@ namespace SQLConnection
                         cmd.Connection = conn;
                         cmd.CommandText = "select distinct Genre from Video_Games";
                         cmd.ExecuteNonQuery();
+                        daGenres.Fill(dsGenres,"Video_Games");
+                        dt = dsGenres.Tables["Video_Games"];
+                        Console.WriteLine("\nList of Genres:");
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Console.WriteLine(dr["Genre"]);
+                        }
+                        Console.WriteLine("");
                     }
                     else{
                         Console.WriteLine("Input is invalid. Try again.");
+                        continue;
                     }
                 }
 
@@ -101,9 +120,18 @@ namespace SQLConnection
                         cmd.Connection = conn;
                         cmd.CommandText = "select distinct Developer from Video_Games";
                         cmd.ExecuteNonQuery();
+                        daDevs.Fill(dsDevs,"Video_Games");
+                        dt = dsDevs.Tables["Video_Games"];
+                        Console.WriteLine("\nList of Developers:");
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Console.WriteLine(dr["Developer"]);
+                        }
+                        Console.WriteLine("");
                     }
                     else{
                         Console.WriteLine("Input is invalid. Try again.");
+                        continue;
                     }
                 }
             }
