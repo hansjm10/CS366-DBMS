@@ -19,7 +19,6 @@ namespace SQLConnection
             {
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
-                MySqlCommand cmd2 = new MySqlCommand();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
 
@@ -38,10 +37,6 @@ namespace SQLConnection
                     dr["avgScore"] + " " + dr["totalReviews"]);
                 }
                 Console.WriteLine("-------------------------------------------------------------------------------");
-                cmd2.Connection = conn;
-                cmd2.CommandType = CommandType.Text;
-                cmd2.CommandText = "drop table if exists VG_AllFiltered";
-                cmd2.ExecuteNonQuery();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

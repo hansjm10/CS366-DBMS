@@ -19,7 +19,6 @@ namespace SQLConnection
             {
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
-                MySqlCommand cmd2 = new MySqlCommand();
                 MySqlParameter param;
                 MySqlParameter param2;
                 MySqlParameter param3;
@@ -60,10 +59,6 @@ namespace SQLConnection
                     Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
                                     + " " + dr["Genre"] + " " + dr["Developer"]);
                 }
-                cmd2.Connection = conn;
-                cmd2.CommandType = CommandType.Text;
-                cmd2.CommandText = "drop table if exists VG_AgeandSystemFiltered";
-                cmd2.ExecuteNonQuery();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

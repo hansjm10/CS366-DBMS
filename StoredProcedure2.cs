@@ -21,7 +21,7 @@ namespace SQLConnection
                 MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
-                
+
                 command.Connection = conn;
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "filterAge13";
