@@ -30,17 +30,7 @@ drop procedure if exists filterAge17;
 delimiter $$
 create procedure filterAge17()
 begin
-create or replace temporary table VG_AgeFiltered
-select* 
-from Video_Games g 
-where (g.Age_Rating != 'M') limit 10; 
-end $$
-delimiter ;
-
-drop procedure if exists filterAge17;
-delimiter $$
-create procedure filterAge17()
-begin
+create table VG_AgeFiltered as
 select* 
 from Video_Games g 
 where (g.Age_Rating != 'M') limit 10; 
@@ -52,19 +42,7 @@ drop procedure if exists filterAge13;
 delimiter $$
 create procedure filterAge13()
 begin
-create or replace temporary table VG_AgeFiltered
-select* 
-from Video_Games g 
-where (g.Age_Rating != 'T') and (g.Age_Rating != 'M') limit 10;
-end $$
-delimiter ;
-drop temporary table if exists VG_AgeFiltered;
-
-
-drop procedure if exists filterAge13;
-delimiter $$
-create procedure filterAge13()
-begin
+create table VG_AgeFiltered as
 select* 
 from Video_Games g 
 where (g.Age_Rating != 'T') and (g.Age_Rating != 'M') limit 10;
@@ -76,7 +54,7 @@ drop procedure if exists filterSystem;
 delimiter $$
 create procedure filterSystem(IN systemOwned_p varchar(255))
 begin 
-create or replace temporary table VG_AgeandSystemFiltered
+create table VG_AgeandSystemFiltered as
 select* 
 from VG_AgeFiltered g 
 where g.Game_ID in (select m.Game_ID from Made_For m where m.System_Name = systemOwned_p) limit 10;
@@ -89,7 +67,7 @@ drop procedure if exists filterAnswers;
 create procedure filterAnswers(IN rY1_p bigint, IN rY2_p bigint, 
 IN gen_p varchar(255), IN dev_p varchar(255))
 begin
-create or replace table VG_AllFiltered
+create table VG_AllFiltered as
 select*  
 from VG_AgeandSystemFiltered g
 where (g.Release_Year >= rY1_p and g.ReleaseYear < rY2_p) or 

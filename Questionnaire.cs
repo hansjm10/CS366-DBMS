@@ -27,23 +27,28 @@ namespace SQLConnection
 
                 filterBySystem sp4 = new filterBySystem();
                 filterByAnswers sp5 = new filterByAnswers();
-    
+
                 Console.WriteLine("Which system would you like to look at games for?");
                 string systemInput = "";
+                string correctInput = "------------------------------------------------------";
                 bool inputisValid = false;
                 while (inputisValid == false){
                     Console.WriteLine("Enter system (for a list of systems, enter 'I'): ");
                     systemInput = Console.ReadLine();
-                    if (systemInput == "Valid"){//Will need an efficient way to check if input is valid.
+                    daSystems.SelectCommand = new MySqlCommand("select * from Systems", conn);
+                    daSystems.Fill(dsSystems,"Systems");
+                    dt = dsSystems.Tables["Systems"];
+                    foreach(DataRow dr in dt.Rows){
+                        if(Convert.ToString(dr["System_Name"]) == systemInput){
+                            correctInput = systemInput;
+                            break;
+                        }
+                    }
+                    if (systemInput == correctInput){
                         sp4.filerSystem(connString, systemInput);
                         inputisValid = true;
                     }
                     else if (systemInput == "I"){
-                        cmd.Connection = conn;
-                        cmd.CommandText = "select * from Systems";
-                        cmd.ExecuteNonQuery();
-                        daSystems.Fill(dsSystems,"Systems");
-                        dt = dsSystems.Tables["Systems"];
                         Console.WriteLine("\nList of Systems:");
                         foreach (DataRow dr in dt.Rows)
                         {
@@ -88,9 +93,7 @@ namespace SQLConnection
                         inputisValid = true;
                     }
                     else if (genreInput == "I"){
-                        cmd.Connection = conn;
-                        cmd.CommandText = "select distinct Genre from Video_Games";
-                        cmd.ExecuteNonQuery();
+                        daGenres.SelectCommand = new MySqlCommand("select distinct Genre from Video_Games", conn);
                         daGenres.Fill(dsGenres,"Video_Games");
                         dt = dsGenres.Tables["Video_Games"];
                         Console.WriteLine("\nList of Genres:");
@@ -117,9 +120,7 @@ namespace SQLConnection
                         inputisValid = true;
                     }
                     else if (devInput == "I"){
-                        cmd.Connection = conn;
-                        cmd.CommandText = "select distinct Developer from Video_Games";
-                        cmd.ExecuteNonQuery();
+                        daDevs.SelectCommand = new MySqlCommand("select distinct Developer from Video_Games", conn);
                         daDevs.Fill(dsDevs,"Video_Games");
                         dt = dsDevs.Tables["Video_Games"];
                         Console.WriteLine("\nList of Developers:");
@@ -138,6 +139,7 @@ namespace SQLConnection
             catch (MySql.Data.MySqlClient.MySqlException ex){
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
+            conn.Close();
         }
     }
 }
