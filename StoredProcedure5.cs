@@ -52,6 +52,8 @@ namespace SQLConnection
                 command.Parameters.Add(param4);
 
                 da = new MySqlDataAdapter(command);
+                command.CommandText = "queryAllFiltered";
+                da = new MySqlDataAdapter(command);
                 da.Fill(ds,"VG_AllFiltered"); 
                 dt = ds.Tables["VG_AllFiltered"];
                 foreach (DataRow dr in dt.Rows)//Once we know this works, we can get rid of this loop.

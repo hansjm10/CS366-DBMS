@@ -37,11 +37,6 @@ namespace SQLConnection
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"VG_AgeandSystemFiltered");
                 dt = ds.Tables["VG_AgeandSystemFiltered"];
-                foreach (DataRow dr in dt.Rows)//Once we know the SP works, we can get rid of this loop.
-                {
-                    Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
-                                    + dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
-                }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
