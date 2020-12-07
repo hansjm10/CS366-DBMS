@@ -16,11 +16,18 @@ namespace SQLConnection
             MySqlConnection conn = new MySqlConnection(connString);
             try
             {
+                MySqlDataAdapter daSystems = new MySqlDataAdapter();
+                MySqlDataAdapter daGenres = new MySqlDataAdapter();
+                MySqlDataAdapter daDevs = new MySqlDataAdapter();
                 MySqlCommand cmd = new MySqlCommand();
+                DataSet dsSystems = new DataSet();
+                DataSet dsGenres = new DataSet();
+                DataSet dsDevs = new DataSet();
+                DataTable dt = new DataTable();
+
                 filterBySystem sp4 = new filterBySystem();
                 filterByAnswers sp5 = new filterByAnswers();
-                conn.Open();
-                
+    
                 Console.WriteLine("Which system would you like to look at games for?");
                 string systemInput = "";
                 bool inputisValid = false;
@@ -103,7 +110,6 @@ namespace SQLConnection
             catch (MySql.Data.MySqlClient.MySqlException ex){
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            conn.Close();
         }
     }
 }

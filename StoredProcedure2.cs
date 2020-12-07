@@ -15,7 +15,6 @@ namespace SQLConnection
         public void filterAge13(String connString)
         {
             MySqlConnection conn = new MySqlConnection(connString);
-            conn.Open();
             try
             {
                 MySqlDataAdapter da = new MySqlDataAdapter();
@@ -35,7 +34,6 @@ namespace SQLConnection
             {
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            conn.Close();
         }
     }
 }   

@@ -28,8 +28,6 @@ namespace SQLConnection
             {
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            conn.Close();
-            Console.WriteLine("Done.");
         }
     }
 }
