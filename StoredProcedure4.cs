@@ -11,17 +11,13 @@ namespace SQLConnection
 {
     class filterBySystem
     {
-        public void filerSystem(string connString)
+        public void filerSystem(string connString, string systemInput)
         {
             MySqlConnection conn = new MySqlConnection(connString);
             MySqlCommand cmd = new MySqlCommand();
 
             try
             {
-                string systemInput = "";
-                Console.WriteLine("Enter system owned: ");
-                systemInput = Console.ReadLine();
-                
                 MySqlDataAdapter da = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();

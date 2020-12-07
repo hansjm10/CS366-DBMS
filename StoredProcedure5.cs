@@ -11,24 +11,12 @@ namespace SQLConnection
 {
     class filterByAnswers
     {
-        public void filterAnswers(string connString)
+        public void filterAnswers(string connString, string rY1, string rY2, string gen, string dev)
         {
             MySqlConnection conn = new MySqlConnection(connString);
 
             try
             {
-                conn.Open();
-                Console.WriteLine("Enter release year 1: ");
-                string rY1 = Console.ReadLine();
-                Console.WriteLine("Enter release year 2: ");
-                string rY2 = Console.ReadLine();
-                Console.WriteLine("Enter age rating: ");
-                string ageRating = Console.ReadLine();
-                Console.WriteLine("Enter genre: ");
-                string gen = Console.ReadLine();
-                Console.WriteLine("Enter developer: ");
-                string dev = Console.ReadLine();
-
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
                 MySqlParameter param;
