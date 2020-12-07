@@ -26,18 +26,16 @@ namespace SQLConnection
             con.Open();
 
             //Declares class variables for classes that access the stored procedures.
+            Questionnaire q = new Questionnaire();
             getUserCredentials sp1 = new getUserCredentials();
             filterTandM sp2 = new filterTandM();
             filterM sp3 = new filterM();
             finalGamesOutput sp6 = new finalGamesOutput();
-            showPrefsList sp7 = new showPrefsList();
-            showMoreInfo sp8 = new showMoreInfo();
-            finalOutputFromPreferences sp9 = new finalOutputFromPreferences();
             
             //Login System
             Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
             string loginSelect = Console.ReadLine();
-            string userName, userID, inputAge; 
+            string userName = "", userID = "", inputAge = ""; 
             int userAge = 0;
             bool loggedIn = false;
             while(loggedIn == false){
@@ -75,6 +73,7 @@ namespace SQLConnection
                             Console.WriteLine("Login failed. Try again.");
                         }
                     }
+                    userID = userCreds.Item1;
                     userAge = Convert.ToInt32(userCreds.Item3);
                     loggedIn = true; 
                 }
@@ -95,14 +94,45 @@ namespace SQLConnection
             }
             
             //Questionnaire
-            
+            Console.WriteLine("");
+            Console.WriteLine("Now it's time for the questionnaire!");
+            q.questionnaire(connString);
             
             //Final Output Screen
             DataTable dt = new DataTable(); 
             dt = sp6.finalOutput(connString);
+            string newInput = "";
+            string saveID = "";
+            bool isDone = false;
+            while(isDone == false){
+                Console.WriteLine("\nTo save a game to your Preferences List, enter 'S'");
+                Console.WriteLine("To go to your Preferences List, enter 'P'");
+                Console.WriteLine("To redo the questionnaire, enter 'Q'");
+                Console.WriteLine("To log out, enter L");
+                newInput = Console.ReadLine();
+                if(newInput == "S"){
+                    Console.WriteLine("Enter id of game you want to save: ");
+                    saveID = Console.ReadLine();
+                    cmd.CommandText = "INSERT INTO Prefers(Game_ID,User_ID) VALUES(?Game_ID,?User_ID)";
+                    cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
+                    cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
+                }
+                else if(newInput == "P"){ //Go to preferences list screen.
 
-            //Preferences List
-
+                }
+                else if(newInput == "Q"){ //Redo questionnaire
+                    q.questionnaire(connString);
+                    dt = sp6.finalOutput(connString);
+                }
+                else if(newInput == "L"){ //Logout
+                    Console.WriteLine("Bye! See you again soon!");
+                    isDone = true;
+                }
+                else{
+                    Console.WriteLine("Input is invalid. Try again.");
+                }
+            }
+            
             con.Close();
             Console.Read();
         }
