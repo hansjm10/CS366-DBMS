@@ -19,7 +19,6 @@ namespace SQLConnection
 
             try
             {
-                conn.Open();
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();
@@ -44,7 +43,6 @@ namespace SQLConnection
             {
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            conn.Close();
             return dt;
         }
     }

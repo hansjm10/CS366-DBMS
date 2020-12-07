@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class filterByAnswers
     {
-        public void filterAnswers(string connString, string rY1, string rY2, string gen, string dev)
+        public void filterAnswers(string connString, int rY1, int rY2, string gen, string dev)
         {
             MySqlConnection conn = new MySqlConnection(connString);
 
