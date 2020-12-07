@@ -39,6 +39,7 @@ namespace SQLConnection
             string userName = "", userID = "", inputAge = ""; 
             int userAge = 0;
             bool loggedIn = false;
+            Tuple<string, string, string> userCreds;
             while(loggedIn == false){
                 if (loginSelect == "1"){ //New user registration.
                     Console.WriteLine("Please enter your username, password, and age.");
@@ -58,28 +59,34 @@ namespace SQLConnection
                     loggedIn = true;
                 }
                 else if (loginSelect == "2"){ //Login for existing users.
+                    bool loginCorrect = false;
                     Console.WriteLine("Please enter your username and password.");
                     Console.WriteLine("Enter username: ");
                     userName = Console.ReadLine();
                     Console.WriteLine("Enter password: ");
                     userID = Console.ReadLine();
-                    Tuple<string, string, string> userCreds = sp1.getUserCred(connString, userID);
-                    bool loginCorrect = false;
                     while (loginCorrect == false){
+                        userCreds = sp1.getUserCred(connString, userID);
                         if (userID == userCreds.Item1 && userName == userCreds.Item2){
                             Console.WriteLine("Welcome back, " + userName + "!");
+                            userID = userCreds.Item1;
+                            userAge = Convert.ToInt32(userCreds.Item3);
                             loginCorrect = true;
+                            loggedIn = true; 
                         }
                         else{
                             Console.WriteLine("Login failed. Try again.");
+                            Console.WriteLine("Enter username: ");
+                            userName = Console.ReadLine();
+                            Console.WriteLine("Enter password: ");
+                            userID = Console.ReadLine();
+                            continue;
                         }
                     }
-                    userID = userCreds.Item1;
-                    userAge = Convert.ToInt32(userCreds.Item3);
-                    loggedIn = true; 
                 }
                 else {
                     Console.WriteLine("Invalid input, try again.");
+                    Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
                     loginSelect = Console.ReadLine();
                 }
             }
