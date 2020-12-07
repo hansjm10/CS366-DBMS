@@ -11,15 +11,12 @@ namespace SQLConnection
 {
     class showMoreInfo
     {
-        public void showInfo(string connString)
+        public void showInfo(string connString, string userID, string title)
         {
             MySqlConnection conn = new MySqlConnection(connString);
 
             try
             {
-                conn.Open();
-                Console.WriteLine("Enter userID: ");
-                string userID = Console.ReadLine();
 
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();

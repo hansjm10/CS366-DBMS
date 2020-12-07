@@ -11,24 +11,18 @@ namespace SQLConnection
 {
     class showPrefsList
     {
-        public void showPreferences(string connString)
+        public void showPreferences(string connString, string userID)
         {
             
             MySqlConnection conn = new MySqlConnection(connString);
-
             try
             {
-                conn.Open();
-                Console.WriteLine("Enter user ID: ");
-                string userID = Console.ReadLine();
-
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
                 MySqlParameter param;
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
-
-
+                
                 command.Connection = conn;
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "showPreferences";
@@ -42,18 +36,19 @@ namespace SQLConnection
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"Video_Games"); 
                 dt = ds.Tables["Video_Games"];
-                foreach (DataRow dr in dt.Rows)//Once we know this works, we'll probably want to convert this
-                {                              //loop to a datatable/dataframe/matrix/whatever and return that.
+                Console.WriteLine("Preferences List");
+                Console.WriteLine("----------------------------------------------");
+                foreach (DataRow dr in dt.Rows)
+                {                              
                     Console.WriteLine(dr["Title"] + " " + dr["Release_Year"] + " " +
                     dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
                 }
+                Console.WriteLine("----------------------------------------------");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            conn.Close();
-            Console.WriteLine("Done.");
         }
     }
 }

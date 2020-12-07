@@ -27,6 +27,7 @@ namespace SQLConnection
 
             //Declares class variables for classes that access the stored procedures.
             Questionnaire q = new Questionnaire();
+            PreferencesList p = new PreferencesList();
             getUserCredentials sp1 = new getUserCredentials();
             filterTandM sp2 = new filterTandM();
             filterM sp3 = new filterM();
@@ -100,7 +101,7 @@ namespace SQLConnection
             
             //Final Output Screen
             DataTable dt = new DataTable(); 
-            dt = sp6.finalOutput(connString);
+            sp6.finalOutput(connString);
             string newInput = "";
             string saveID = "";
             bool isDone = false;
@@ -111,21 +112,20 @@ namespace SQLConnection
                 Console.WriteLine("To log out, enter L");
                 newInput = Console.ReadLine();
                 if(newInput == "S"){
-                    Console.WriteLine("Enter id of game you want to save: ");
+                    Console.WriteLine("Enter the ID of the game you want to save: ");
                     saveID = Console.ReadLine();
                     cmd.CommandText = "INSERT INTO Prefers(Game_ID,User_ID) VALUES(?Game_ID,?User_ID)";
                     cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
                     cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
                 }
                 else if(newInput == "P"){ //Go to preferences list screen.
-
+                    isDone = p.prefsList(connString, userID);
                 }
                 else if(newInput == "Q"){ //Redo questionnaire
                     q.questionnaire(connString);
-                    dt = sp6.finalOutput(connString);
+                    sp6.finalOutput(connString);
                 }
                 else if(newInput == "L"){ //Logout
-                    Console.WriteLine("Bye! See you again soon!");
                     isDone = true;
                 }
                 else{
@@ -133,6 +133,7 @@ namespace SQLConnection
                 }
             }
             
+            Console.WriteLine("Bye! See you again soon!");
             con.Close();
             Console.Read();
         }

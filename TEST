@@ -116,7 +116,7 @@ drop procedure if exists showPreferences;
 delimiter $$
 create procedure showPreferences(IN userID_p varchar(255))
 begin
-select g.Title, g.Release_Year, g.Age_Rating, g.Genre, g.Developer
+select g.Title, g.Release_Year, g.Age_Rating, g.Genre, g.Developer, g.Game_ID
 from Video_Games g
 where g.Game_ID in (select p.Game_ID from Prefers p where 
 p.User_ID in (select u.User_ID from Users u where u.User_ID = userID_p));

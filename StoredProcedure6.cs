@@ -11,17 +11,16 @@ namespace SQLConnection
 {
     class finalGamesOutput
     {
-        public DataTable finalOutput(string connString)
+        public void finalOutput(string connString)
         {
             
             MySqlConnection conn = new MySqlConnection(connString);
-            DataTable dt = new DataTable();
-
             try
             {
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
                 DataSet ds = new DataSet();
+                DataTable dt = new DataTable();
 
                 command.Connection = conn;
                 command.CommandType = CommandType.StoredProcedure;
@@ -43,7 +42,6 @@ namespace SQLConnection
             {
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            return dt;
         }
     }
 }
