@@ -25,7 +25,7 @@ namespace SQLConnection
             Console.WriteLine("Connecting...");
             con.Open();
 
-            //Declares class variables for classes that access the stored procedures.
+            //Declares class variables for classes that access the Questionnaire, PrefsList, and SPs.
             Questionnaire q = new Questionnaire();
             PreferencesList p = new PreferencesList();
             getUserCredentials sp1 = new getUserCredentials();
@@ -33,7 +33,7 @@ namespace SQLConnection
             filterM sp3 = new filterM();
             finalGamesOutput sp6 = new finalGamesOutput();
             
-            //Login System
+            //User Registration and Login System
             Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
             string loginSelect = Console.ReadLine();
             string userName = "", userID = "", inputAge = ""; 
@@ -114,6 +114,7 @@ namespace SQLConnection
                 if(newInput == "S"){
                     Console.WriteLine("Enter the ID of the game you want to save: ");
                     saveID = Console.ReadLine();
+                    cmd.Connection = con;
                     cmd.CommandText = "INSERT INTO Prefers(Game_ID,User_ID) VALUES(?Game_ID,?User_ID)";
                     cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
                     cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
@@ -134,6 +135,9 @@ namespace SQLConnection
             }
             
             Console.WriteLine("Bye! See you again soon!");
+            cmd.Connection = con;
+            cmd.CommandText = "drop table if exists VG_AllFiltered";
+            cmd.ExecuteNonQuery();
             con.Close();
             Console.Read();
         }

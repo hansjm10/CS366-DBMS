@@ -19,6 +19,7 @@ namespace SQLConnection
                 MySqlCommand cmd = new MySqlCommand();
                 filterBySystem sp4 = new filterBySystem();
                 filterByAnswers sp5 = new filterByAnswers();
+                conn.Open();
                 
                 Console.WriteLine("Which system would you like to look at games for?");
                 string systemInput = "";
@@ -31,6 +32,7 @@ namespace SQLConnection
                         inputisValid = true;
                     }
                     else if (systemInput == "I"){
+                        cmd.Connection = conn;
                         cmd.CommandText = "select * from Systems";
                         cmd.ExecuteNonQuery();
                     }
@@ -69,6 +71,7 @@ namespace SQLConnection
                         inputisValid = true;
                     }
                     else if (genreInput == "I"){
+                        cmd.Connection = conn;
                         cmd.CommandText = "select distinct Genre from Video_Games";
                         cmd.ExecuteNonQuery();
                     }
@@ -88,6 +91,7 @@ namespace SQLConnection
                         inputisValid = true;
                     }
                     else if (devInput == "I"){
+                        cmd.Connection = conn;
                         cmd.CommandText = "select distinct Developer from Video_Games";
                         cmd.ExecuteNonQuery();
                     }
@@ -99,6 +103,7 @@ namespace SQLConnection
             catch (MySql.Data.MySqlClient.MySqlException ex){
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
+            conn.Close();
         }
     }
 }
