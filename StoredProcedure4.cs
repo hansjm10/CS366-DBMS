@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class filterBySystem
     {
-        public void filerSystem(string connString, string systemInput)
+        public void filterSystem(string connString, string systemInput)
         {
             MySqlConnection conn = new MySqlConnection(connString);
 

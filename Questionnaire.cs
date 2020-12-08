@@ -45,7 +45,7 @@ namespace SQLConnection
                         }
                     }
                     if (systemInput == correctInputS){
-                        sp4.filerSystem(connString, systemInput);
+                        sp4.filterSystem(connString, systemInput);
                         inputisValid = true;
                     }
                     else if (systemInput == "I"){
