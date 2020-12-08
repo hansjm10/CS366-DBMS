@@ -41,7 +41,8 @@ namespace SQLConnection
                     else if(input == "D"){
                         Console.WriteLine("Enter the ID of the game you want to delete: ");
                         delID = Console.ReadLine();
-                        cmd.CommandText = "delete from Prefers";
+                        cmd.CommandText = "delete from Prefers where Game_ID = ";
+                        Console.WriteLine("Game successfully deleted.");
                     }
                     else if(input == "R"){
                         sp9.filterPreferences(connString);
