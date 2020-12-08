@@ -128,7 +128,7 @@ namespace SQLConnection
                         }
                     }
                     if (devInput == correctInputD){
-                        sp5.filterAnswers(connString, releaseYear1, releaseYear2, genreInput, devInput);
+                        sp5.filterAnswers(connString, inputRY1, inputRY2, genreInput, devInput);
                         inputisValid = true;
                     }
                     else if (devInput == "I"){

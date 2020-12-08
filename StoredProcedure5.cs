@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class filterByAnswers
     {
-        public void filterAnswers(string connString, int rY1, int rY2, string gen, string dev)
+        public void filterAnswers(string connString, string rY1, string rY2, string gen, string dev)
         {
             MySqlConnection conn = new MySqlConnection(connString);
 
@@ -57,11 +57,6 @@ namespace SQLConnection
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"VG_AllFiltered");
                 dt = ds.Tables["VG_AllFiltered"];
-                foreach (DataRow dr in dt.Rows)//Once we know this works, we can get rid of this loop.
-                {
-                    Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["Release_Year"] + " " 
-                                    + " " + dr["Genre"] + " " + dr["Developer"]);
-                }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

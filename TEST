@@ -76,7 +76,7 @@ delimiter ;
 //Can get rid of limit once we know it works.
 delimiter $$
 drop procedure if exists filterAnswers;
-create procedure filterAnswers(IN rY1_p bigint, IN rY2_p bigint, 
+create procedure filterAnswers(IN rY1_p varchar(255), IN rY2_p varchar(255), 
 IN gen_p varchar(255), IN dev_p varchar(255))
 begin
 drop table if exists VG_AllFiltered;
