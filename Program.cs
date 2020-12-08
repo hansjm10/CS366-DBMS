@@ -108,8 +108,6 @@ namespace SQLConnection
             
             //Final Output Screen
             DataTable dt = new DataTable();
-            MySqlParameter param = new MySqlParameter();
-            MySqlParameter param2 = new MySqlParameter(); 
             sp6.finalOutput(connString);
             string newInput = "";
             string saveID = "";
@@ -123,21 +121,12 @@ namespace SQLConnection
                 if(newInput == "S"){
                     Console.WriteLine("Enter the ID of the game you want to save: ");
                     saveID = Console.ReadLine();
-                    cmd.Connection = con;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "updatePrefers";
-                    param = new MySqlParameter("@userID_p", userID);
-                    param2 = new MySqlParameter("@game_ID_p", saveID);
-                    param.Direction = ParameterDirection.Input;
-                    param.DbType = DbType.String;
-                    cmd.Parameters.Add(param);
-
-                    param2.Direction = ParameterDirection.Input;
-                    param2.DbType = DbType.String;
-                    cmd.Parameters.Add(param2);
+                    
+                    cmd.CommandText = "INSERT INTO Prefers(User_ID,Game_ID) VALUES(?User_ID,?Game_ID)";
+                    cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
+                    cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
                     cmd.ExecuteNonQuery();
-                    // cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
-                    // cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
+                    
                 }
                 else if(newInput == "P"){ //Go to preferences list screen.
                     isDone = p.prefsList(connString, userID);

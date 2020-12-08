@@ -45,7 +45,7 @@ namespace SQLConnection
                 dt = ds.Tables["Video_Games"];
                 foreach (DataRow dr in dt.Rows)//Once we know this works, we'll probably want to convert this
                 {                              //loop to a datatable/dataframe/matrix/whatever and return that.
-                    Console.WriteLine(dr["System_Name"] + " " + dr["totrevs"] + " " + dr["avgrevs"]);
+                    Console.WriteLine(dr["System_Name"] + " " + dr["Num_of_Reviews"] + " " + dr["Score"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -53,7 +53,6 @@ namespace SQLConnection
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
             conn.Close();
-            Console.WriteLine("Done.");
         }
     }
 }

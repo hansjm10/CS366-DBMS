@@ -162,8 +162,8 @@ delimiter ;
 delimiter $$
 drop procedure if exists updatePrefers;
 create procedure updatePrefers(IN userID_p varchar(255),
-IN game_ID_p varchar(255))
+IN gameID_p varchar(255))
 begin
-INSERT into Prefers(User_ID,Game_ID) Values (@userID_p,@game_ID_p);
+INSERT into Prefers(User_ID,Game_ID) Values (@userID_p,@gameID_p);
 end $$
 delimiter ;

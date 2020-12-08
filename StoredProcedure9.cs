@@ -85,7 +85,7 @@ namespace SQLConnection
                 {                              //loop to a datatable/dataframe/matrix/whatever and return that.
                     Console.WriteLine(dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
                     dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
-                    dr["avgScore"] + " " + dr["totalReviews"]);
+                    dr["avgScore"] + " " + dr["Num_of_Reviews"]);
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
