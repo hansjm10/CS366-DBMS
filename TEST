@@ -83,8 +83,8 @@ drop table if exists VG_AllFiltered;
 create table VG_AllFiltered as
 select *  
 from VG_AgeandSystemFiltered g
-where (g.Release_Year >= rY1_p and g.Release_Year < rY2_p) or 
-(Developer = dev_P) or (Genre = gen_p);
+where (g.Release_Year >= rY1_p and g.Release_Year <= rY2_p) or 
+(g.Developer = dev_P) or (g.Genre = gen_p);
 end $$
 delimiter ;
 

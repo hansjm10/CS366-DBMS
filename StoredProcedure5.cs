@@ -17,24 +17,18 @@ namespace SQLConnection
 
             try
             {
-                MySqlDataAdapter da;
-                MySqlDataAdapter da2;
+                MySqlDataAdapter da = new MySqlDataAdapter();
                 MySqlCommand command = new MySqlCommand();
-                MySqlCommand command2 = new MySqlCommand();
+                DataSet ds = new DataSet();
+                DataTable dt = new DataTable();
                 MySqlParameter param;
                 MySqlParameter param2;
                 MySqlParameter param3;
                 MySqlParameter param4;
-                DataSet ds = new DataSet();
-                DataTable dt = new DataTable();
 
                 command.Connection = conn;
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "filterAnswers";
-
-                command2.Connection = conn;
-                command2.CommandType = CommandType.StoredProcedure;
-                command2.CommandText = "queryAllFiltered";
 
                 param = new MySqlParameter("@rY1_p", rY1);
                 param2 = new MySqlParameter("@rY2_p", rY2);
@@ -58,8 +52,10 @@ namespace SQLConnection
                 command.Parameters.Add(param4);
 
                 da = new MySqlDataAdapter(command);
-                da2 = new MySqlDataAdapter(command2);
-                da2.Fill(ds,"VG_AllFiltered"); 
+
+                command.CommandText = "queryAllFiltered";
+                da = new MySqlDataAdapter(command);
+                da.Fill(ds,"VG_AllFiltered");
                 dt = ds.Tables["VG_AllFiltered"];
                 foreach (DataRow dr in dt.Rows)//Once we know this works, we can get rid of this loop.
                 {
