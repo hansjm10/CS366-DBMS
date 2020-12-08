@@ -144,11 +144,7 @@ namespace SQLConnection
             }
             
             Console.WriteLine("Bye! See you again soon!");
-            // cmd.Connection = con;
-            // cmd.CommandText = "drop table if exists VG_AllFiltered";
-            // cmd.ExecuteNonQuery();
             con.Close();
-            Console.Read();
         }
     }
 }
