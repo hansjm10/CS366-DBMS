@@ -32,6 +32,7 @@ namespace SQLConnection
                     Console.WriteLine("To get more reccommendations based on your Preferences List, enter 'R'");
                     Console.WriteLine("To go back to the options screen, enter 'O'.");
                     Console.WriteLine("To log out, enter 'L'.");
+                    input = Console.ReadLine();
                     if(input == "I"){
                         Console.WriteLine("Enter the title of the game you want more info on: ");
                         title = Console.ReadLine();
