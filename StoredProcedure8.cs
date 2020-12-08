@@ -21,6 +21,7 @@ namespace SQLConnection
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
                 MySqlParameter param;
+                MySqlParameter param2;
                 DataSet ds = new DataSet();
                 DataTable dt = new DataTable();
 
@@ -30,11 +31,15 @@ namespace SQLConnection
                 command.CommandText = "showInfo";
 
                 param = new MySqlParameter("@userID_p", userID);
-
+                param2 = new MySqlParameter("@title_p", title);
                 param.Direction = ParameterDirection.Input;
                 param.DbType = DbType.String;
+                param2.Direction = ParameterDirection.Input;
+                param2.DbType = DbType.String;
                 command.Parameters.Add(param);
-
+                command.Parameters.Add(param2);
+                conn.Open();
+                command.ExecuteNonQuery();
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"Video_Games"); //This will have to change.
                 dt = ds.Tables["Video_Games"];

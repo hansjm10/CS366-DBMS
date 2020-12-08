@@ -107,7 +107,9 @@ namespace SQLConnection
             q.questionnaire(connString);
             
             //Final Output Screen
-            DataTable dt = new DataTable(); 
+            DataTable dt = new DataTable();
+            MySqlParameter param = new MySqlParameter();
+            MySqlParameter param2 = new MySqlParameter(); 
             sp6.finalOutput(connString);
             string newInput = "";
             string saveID = "";
@@ -122,8 +124,17 @@ namespace SQLConnection
                     Console.WriteLine("Enter the ID of the game you want to save: ");
                     saveID = Console.ReadLine();
                     cmd.Connection = con;
-                    string queryString = "insert into Prefers (User_ID,Game_ID) values(" +userID + "," + saveID + ");";
-                    cmd = new MySqlCommand(queryString, con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "updatePrefers";
+                    param = new MySqlParameter("@userID_p", userID);
+                    param2 = new MySqlParameter("@game_ID_p", saveID);
+                    param.Direction = ParameterDirection.Input;
+                    param.DbType = DbType.String;
+                    cmd.Parameters.Add(param);
+
+                    param2.Direction = ParameterDirection.Input;
+                    param2.DbType = DbType.String;
+                    cmd.Parameters.Add(param2);
                     cmd.ExecuteNonQuery();
                     // cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
                     // cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
