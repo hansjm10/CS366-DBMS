@@ -84,7 +84,7 @@ create table VG_AllFiltered as
 select *  
 from VG_AgeandSystemFiltered g
 where (g.Release_Year >= rY1_p and g.Release_Year <= rY2_p) and 
-((g.Developer = dev_P) or (g.Genre = gen_p));
+((g.Developer = dev_p) and (g.Genre = gen_p));
 end $$
 delimiter ;
 
@@ -100,14 +100,13 @@ delimiter $$
 drop procedure if exists finalOutput;
 create procedure finalOutput()
 begin
-select g.Game_ID, g.Title, s.System_Name, g.Release_Year, g.Age_Rating,
-g.Genre, g.Developer, avg(r.Score) as avgScore,
-sum(r.Num_of_Reviews) as totalReviews, g.Game_ID
+select g.Title, s.System_Name, g.Release_Year, g.Age_Rating,
+g.Genre, g.Developer, r.Score,
+r.Num_of_Reviews, g.Game_ID
 from VG_AllFiltered g
 inner join Metacritic_Review r on r.Game_ID = g.Game_ID
 inner join Made_For s on s.Game_ID = g.Game_ID 
-where g.Game_ID = r.Game_ID and g.Game_ID = s.Game_ID
-order by avgScore desc limit 10;
+order by r.Score desc;
 end $$
 delimiter ;
 

@@ -31,6 +31,8 @@ namespace SQLConnection
                 param.Direction = ParameterDirection.Input;
                 param.DbType = DbType.String;
                 command.Parameters.Add(param);
+                conn.Open();
+                command.ExecuteNonQuery();
                 da = new MySqlDataAdapter(command);
 
                 command.CommandText = "queryFilterSystem";

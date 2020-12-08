@@ -28,13 +28,13 @@ namespace SQLConnection
 
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"VG_AllFiltered"); 
-                dt = ds.Tables["VG_AllFIltered"];
+                dt = ds.Tables["VG_AllFiltered"];
                 Console.WriteLine("We think these games are right for you!");
                 Console.WriteLine("-------------------------------------------------------------------------------");
                 foreach (DataRow dr in dt.Rows){
-                    Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
+                    Console.WriteLine(dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
                     dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
-                    dr["avgScore"] + " " + dr["totalReviews"]);
+                    dr["Score"] + " " + dr["Num_of_Reviews"]+ " " + dr["Game_ID"]);
                 }
                 Console.WriteLine("-------------------------------------------------------------------------------");
             }

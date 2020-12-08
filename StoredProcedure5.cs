@@ -50,7 +50,8 @@ namespace SQLConnection
                 param4.Direction = ParameterDirection.Input;
                 param4.DbType = DbType.String;
                 command.Parameters.Add(param4);
-
+                conn.Open();
+                command.ExecuteNonQuery();
                 da = new MySqlDataAdapter(command);
 
                 command.CommandText = "queryAllFiltered";
