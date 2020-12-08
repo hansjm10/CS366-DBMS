@@ -122,9 +122,11 @@ namespace SQLConnection
                     Console.WriteLine("Enter the ID of the game you want to save: ");
                     saveID = Console.ReadLine();
                     cmd.Connection = con;
-                    cmd.CommandText = "INSERT INTO Prefers(Game_ID,User_ID) VALUES(?Game_ID,?User_ID)";
-                    cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
-                    cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
+                    string queryString = "insert into Prefers (User_ID,Game_ID) values(" +userID + "," + saveID + ");";
+                    cmd = new MySqlCommand(queryString, con);
+                    cmd.ExecuteNonQuery();
+                    // cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
+                    // cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
                 }
                 else if(newInput == "P"){ //Go to preferences list screen.
                     isDone = p.prefsList(connString, userID);
@@ -142,9 +144,9 @@ namespace SQLConnection
             }
             
             Console.WriteLine("Bye! See you again soon!");
-            cmd.Connection = con;
-            cmd.CommandText = "drop table if exists VG_AllFiltered";
-            cmd.ExecuteNonQuery();
+            // cmd.Connection = con;
+            // cmd.CommandText = "drop table if exists VG_AllFiltered";
+            // cmd.ExecuteNonQuery();
             con.Close();
             Console.Read();
         }

@@ -5600,24 +5600,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\spipe\\.nuget\\packages\\": {}
+    "C:\\Users\\jorda\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\spipe\\OneDrive\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
+      "projectUniqueName": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
       "projectName": "SQLConnection",
-      "projectPath": "C:\\Users\\spipe\\OneDrive\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
-      "packagesPath": "C:\\Users\\spipe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\spipe\\OneDrive\\Documents\\GitHub\\CS366-DBMS\\obj\\",
+      "projectPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\SQLConnection.csproj",
+      "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jorda\\OneDrive\\Email attachments\\Documents\\GitHub\\CS366-DBMS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\spipe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\jorda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

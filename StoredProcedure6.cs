@@ -32,7 +32,7 @@ namespace SQLConnection
                 Console.WriteLine("We think these games are right for you!");
                 Console.WriteLine("-------------------------------------------------------------------------------");
                 foreach (DataRow dr in dt.Rows){
-                    Console.WriteLine(dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
+                    Console.WriteLine(dr["Game_ID"] + " " + dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
                     dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
                     dr["avgScore"] + " " + dr["totalReviews"]);
                 }
