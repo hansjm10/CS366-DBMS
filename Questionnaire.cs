@@ -30,7 +30,7 @@ namespace SQLConnection
 
                 Console.WriteLine("Which system would you like to look at games for?");
                 string systemInput = "";
-                string correctInput = "------------------------------------------------------";
+                string correctInputS = "------------------------------------------------------";
                 bool inputisValid = false;
                 while (inputisValid == false){
                     Console.WriteLine("Enter system (for a list of systems, enter 'I'): ");
@@ -40,11 +40,11 @@ namespace SQLConnection
                     dt = dsSystems.Tables["Systems"];
                     foreach(DataRow dr in dt.Rows){
                         if(Convert.ToString(dr["System_Name"]) == systemInput){
-                            correctInput = systemInput;
+                            correctInputS = systemInput;
                             break;
                         }
                     }
-                    if (systemInput == correctInput){
+                    if (systemInput == correctInputS){
                         sp4.filerSystem(connString, systemInput);
                         inputisValid = true;
                     }
@@ -89,7 +89,9 @@ namespace SQLConnection
                 while (inputisValid == false){
                     Console.WriteLine("Enter genre (for a list of genres, enter 'I'): ");
                     genreInput = Console.ReadLine();
-                    if (genreInput == "Valid"){//Will need an efficient way to check if input is valid.
+                    if (genreInput == "Sports" || genreInput == "Platform" || genreInput == "Racing" || genreInput == "Role-Playing" 
+                        || genreInput == "Puzzle" || genreInput == "Misc" || genreInput == "Shooter" || genreInput == "Simulation"
+                        || genreInput == "Action" || genreInput == "Fighting" || genreInput == "Adventure" || genreInput == "Strategy"){
                         inputisValid = true;
                     }
                     else if (genreInput == "I"){
@@ -111,11 +113,21 @@ namespace SQLConnection
 
                 Console.WriteLine("Who is your favorite developer?");
                 string devInput = "";
+                string correctInputD = "-------------------------------------";
                 inputisValid = false;
                 while (inputisValid == false){
                     Console.WriteLine("Enter developer (for a list of developers, enter 'I'): ");
-                    genreInput = Console.ReadLine();
-                    if (devInput == "Valid"){//Will need an efficient way to check if input is valid.
+                    devInput = Console.ReadLine();
+                    daDevs.SelectCommand = new MySqlCommand("select distinct Developer from Video_Games", conn);
+                    daDevs.Fill(dsDevs,"Video_Games");
+                    dt = dsDevs.Tables["Video_Games"];
+                    foreach(DataRow dr in dt.Rows){
+                        if(Convert.ToString(dr["Developer"]) == devInput){
+                            correctInputD = devInput;
+                            break;
+                        }
+                    }
+                    if (devInput == correctInputD){
                         sp5.filterAnswers(connString, releaseYear1, releaseYear2, genreInput, devInput);
                         inputisValid = true;
                     }
