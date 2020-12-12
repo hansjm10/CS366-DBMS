@@ -41,12 +41,16 @@ namespace SQLConnection
                 conn.Open();
                 command.ExecuteNonQuery();
                 da = new MySqlDataAdapter(command);
-                da.Fill(ds,"Video_Games"); //This will have to change.
+                da.Fill(ds,"Video_Games"); 
                 dt = ds.Tables["Video_Games"];
-                foreach (DataRow dr in dt.Rows)//Once we know this works, we'll probably want to convert this
-                {                              //loop to a datatable/dataframe/matrix/whatever and return that.
-                    Console.WriteLine(dr["System_Name"] + " " + dr["Num_of_Reviews"] + " " + dr["Score"]);
+                Console.WriteLine("\nAdditional Info");
+                Console.WriteLine("System\t# Reviews\tMetacritic Score");
+                Console.WriteLine("------------------------------------------------------------");
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Console.WriteLine(dr["System_Name"] + "\t" + dr["Num_of_Reviews"] + "\t" + dr["Score"]);
                 }
+                Console.WriteLine("-------------------------------------------------------------");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

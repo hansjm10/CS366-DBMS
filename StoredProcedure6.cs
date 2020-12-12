@@ -29,14 +29,15 @@ namespace SQLConnection
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"VG_AllFiltered"); 
                 dt = ds.Tables["VG_AllFiltered"];
-                Console.WriteLine("We think these games are right for you!");
-                Console.WriteLine("-------------------------------------------------------------------------------");
+                Console.WriteLine("\nWe think these games are right for you!");
+                Console.WriteLine("Title\tSystem\tRelease Year\tAge Rating\tGenre\tDeveloper\tMetacritic Score\t# Reviews\tGameID");
+                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
                 foreach (DataRow dr in dt.Rows){
-                    Console.WriteLine(dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
-                    dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
-                    dr["Score"] + " " + dr["Num_of_Reviews"]+ " " + dr["Game_ID"]);
+                    Console.WriteLine(dr["Title"] + "\t" + dr["System_Name"]+"\t"+ dr["Release_Year"] + "\t" +
+                    dr["Age_Rating"] + "\t" + dr["Genre"] + "\t" + dr["Developer"] + "\t" + 
+                    dr["Score"] + "\t\t" + dr["Num_of_Reviews"]+ "\t" + dr["Game_ID"]);
                 }
-                Console.WriteLine("-------------------------------------------------------------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

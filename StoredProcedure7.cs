@@ -36,14 +36,15 @@ namespace SQLConnection
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"Video_Games"); 
                 dt = ds.Tables["Video_Games"];
-                Console.WriteLine("Preferences List");
-                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("\nPreferences List");
+                Console.WriteLine("Title\tRelease Year\tAge Rating\tGenre\tDeveloper");
+                Console.WriteLine("------------------------------------------------------------------------------------------------");
                 foreach (DataRow dr in dt.Rows)
                 {                              
-                    Console.WriteLine(dr["Title"] + " " + dr["Release_Year"] + " " +
-                    dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"]);
+                    Console.WriteLine(dr["Title"] + "\t" + dr["Release_Year"] + "\t" +
+                    dr["Age_Rating"] + "\t" + dr["Genre"] + "\t" + dr["Developer"]);
                 }
-                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------------------");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

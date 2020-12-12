@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class filterBySystem
     {
-        public void filterSystem(string connString, string systemInput)
+        public void filterSystem(string connString, string userID)
         {
             MySqlConnection conn = new MySqlConnection(connString);
 
@@ -27,7 +27,7 @@ namespace SQLConnection
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "filterSystem";
                 
-                param = new MySqlParameter("@systemOwned_p", systemInput);
+                param = new MySqlParameter("@userID_p", userID);
                 param.Direction = ParameterDirection.Input;
                 param.DbType = DbType.String;
                 command.Parameters.Add(param);

@@ -35,6 +35,9 @@ namespace SQLConnection
                 finalGamesOutput sp6 = new finalGamesOutput();
             
                 //User Registration and Login System
+                Console.WriteLine("\n***************************************");
+                Console.WriteLine("       VIDEO GAME RECCOMENDER");
+                Console.WriteLine("****************************************");
                 Console.WriteLine("Enter '1' to register as new user; enter '2' to log in.");
                 string loginSelect = Console.ReadLine();
                 string userName = "", userID = "", inputAge = ""; 
@@ -43,7 +46,7 @@ namespace SQLConnection
                 Tuple<string, string, string> userCreds;
                 while(loggedIn == false){
                     if (loginSelect == "1"){ //New user registration.
-                        Console.WriteLine("Please enter your username, password, and age.");
+                        Console.WriteLine("\nPlease enter your username, password, and age.");
                         Console.WriteLine("Enter username: ");
                         userName = Console.ReadLine();
                         Console.WriteLine("Enter password: ");
@@ -51,6 +54,7 @@ namespace SQLConnection
                         Console.WriteLine("Enter age: ");
                         inputAge = Console.ReadLine();
                         Int32.TryParse(inputAge, out userAge);
+                        cmd.Parameters.Clear();
                         cmd.CommandText = "INSERT INTO Users(User_ID,User_Name,Age) VALUES(?User_ID,?User_Name,?Age)";
                         cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
                         cmd.Parameters.Add("?User_Name", MySqlDbType.VarChar).Value = userName;
@@ -61,7 +65,7 @@ namespace SQLConnection
                     }
                     else if (loginSelect == "2"){ //Login for existing users.
                         bool loginCorrect = false;
-                        Console.WriteLine("Please enter your username and password.");
+                        Console.WriteLine("\nPlease enter your username and password.");
                         Console.WriteLine("Enter username: ");
                         userName = Console.ReadLine();
                         Console.WriteLine("Enter password: ");
@@ -69,14 +73,14 @@ namespace SQLConnection
                         while (loginCorrect == false){
                             userCreds = sp1.getUserCred(connString, userID);
                             if (userID == userCreds.Item1 && userName == userCreds.Item2){
-                                Console.WriteLine("Welcome back, " + userName + "!");
+                                Console.WriteLine("\nWelcome back, " + userName + "!");
                                 userID = userCreds.Item1;
                                 userAge = Convert.ToInt32(userCreds.Item3);
                                 loginCorrect = true;
                                 loggedIn = true; 
                             }
                             else{
-                                Console.WriteLine("Login failed. Try again.");
+                                Console.WriteLine("\nLogin failed. Try again.");
                                 Console.WriteLine("Enter username: ");
                                 userName = Console.ReadLine();
                                 Console.WriteLine("Enter password: ");
@@ -86,43 +90,54 @@ namespace SQLConnection
                         }
                     }
                     else {
-                        Console.WriteLine("Invalid input, try again.");
-                        Console.WriteLine("Type '1' to register as new user, press '2' to log in.");
+                        Console.WriteLine("\nInvalid input, try again.");
+                        Console.WriteLine("\nType '1' to register as new user, press '2' to log in.");
                         loginSelect = Console.ReadLine();
                     }
                 }
         
                 //Filter by age
                 if(userAge < 13){
-                    Console.WriteLine("Strict parental controls enabled. Only games rated E and E10+ will be reccomended to you.");
+                    Console.WriteLine("\nStrict parental controls enabled. Only games rated E and E10+ will be reccomended to you.");
                     sp2.filterAge13(connString);
                 }
                 else if(userAge >= 13 && userAge < 17){
-                    Console.WriteLine("Moderate parental controls enabled. No M-rated games will be reccomended to you.");
+                    Console.WriteLine("\nModerate parental controls enabled. No M-rated games will be reccomended to you.");
                     sp3.filterAge17(connString);
                 }
             
                 //Questionnaire
                 string qChoice = "";
+                bool qDone = false;
                 Console.WriteLine("\nWould you like to do the questionnaire (enter 'Y' for yes or 'N' for no)?");
                 qChoice = Console.ReadLine();
-                if (qChoice == "Y"){
-                    Console.WriteLine("");
-                    Console.WriteLine("Now it's time for the questionnaire!");
-                    q.questionnaire(connString);
-                    sp6.finalOutput(connString);
-                }
-                else if(qChoice == "N"){
-                    Console.WriteLine("");
-                    Console.WriteLine("Okay!  Straight to the options screen it is!");
+                while (qDone == false){
+                    if (qChoice == "Y"){
+                        Console.WriteLine("\n***************************************");
+                        Console.WriteLine("           QUESTIONNAIRE");
+                        Console.WriteLine("****************************************");
+                        q.questionnaire(connString, userID);
+                        sp6.finalOutput(connString);
+                        qDone = true;
+                    }
+                    else if(qChoice == "N"){
+                        Console.WriteLine("\nOkay!  Straight to the options screen it is!");
+                        qDone = true;
+                    }
+                    else{
+                        Console.WriteLine("\nInvalid input, try again.");
+                        Console.WriteLine("\nWould you like to do the questionnaire (enter 'Y' for yes or 'N' for no)?");
+                        qChoice = Console.ReadLine();
+                    }
                 }
                 
-            
                 //Options Screen
-                string newInput = "";
-                string saveID = "";
+                string newInput = "", saveID = "", closeChoice = "";
                 bool isDone = false;
                 while(isDone == false){
+                    Console.WriteLine("\n***************************************");
+                    Console.WriteLine("             OPTIONS");
+                    Console.WriteLine("****************************************");
                     Console.WriteLine("\nTo save a game to your Preferences List, enter 'S'.");
                     Console.WriteLine("To go to your Preferences List, enter 'P'.");
                     Console.WriteLine("To redo the questionnaire, enter 'Q'.");
@@ -130,34 +145,59 @@ namespace SQLConnection
                     Console.WriteLine("To close your account, enter 'C'.");
                     newInput = Console.ReadLine();
                     if(newInput == "S"){
-                        Console.WriteLine("Enter the ID of the game you want to save: ");
+                        Console.WriteLine("\nEnter the ID of the game you want to save: ");
                         saveID = Console.ReadLine();
-                    
+                        cmd.Parameters.Clear();
                         cmd.CommandText = "INSERT INTO Prefers(User_ID,Game_ID) VALUES(?User_ID,?Game_ID)";
                         cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
                         cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
                         cmd.ExecuteNonQuery();
-                    
+                        Console.WriteLine("\nGame saved!");
                     }
                     else if(newInput == "P"){ //Go to preferences list screen.
                         isDone = p.prefsList(connString, userID);
                     }
                     else if(newInput == "Q"){ //Redo questionnaire
-                        q.questionnaire(connString);
+                        Console.WriteLine("\n***************************************");
+                        Console.WriteLine("           QUESTIONNAIRE");
+                        Console.WriteLine("****************************************");
+                        q.questionnaire(connString, userID);
                         sp6.finalOutput(connString);
                     }
                     else if(newInput == "L"){ //Logout
+                        Console.WriteLine("\nBye! See you again soon!");
                         isDone = true;
                     }
                     else if(newInput == "C"){ //Close account 
-
+                        Console.WriteLine("\nAre you sure you want to de-register (enter 'Y' for yes or 'N' for no).");
+                        if (closeChoice == "Y"){
+                            Console.WriteLine("\nWhatever you say...");
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = "DELETE FROM Users WHERE User_ID = @userID_p";
+                            cmd.Parameters.AddWithValue("@userID_p", userID);  
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = "DELETE FROM Prefers WHERE User_ID = @userID_p";
+                            cmd.Parameters.AddWithValue("@userID_p", userID);  
+                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.Clear();
+                            cmd.CommandText = "DELETE FROM Owns WHERE User_ID = @userID_p";
+                            cmd.Parameters.AddWithValue("@userID_p", userID);  
+                            cmd.ExecuteNonQuery();
+                            Console.WriteLine("\nWe're sad to see you go...");
+                            isDone = true;
+                        }
+                        else if (closeChoice == "N"){
+                            Console.WriteLine("\nWhew! That was a close one!");
+                        }
+                        else{
+                            Console.WriteLine("\nInput is invalid, but we'll take it as a 'No'");
+                        }
                     }
                     else{
                         Console.WriteLine("Input is invalid. Try again.");
                     }
                 }
-            
-                Console.WriteLine("Bye! See you again soon!");
                 con.Close();
             }
             catch(MySql.Data.MySqlClient.MySqlException ex){

@@ -143,7 +143,7 @@ delimiter ;
 delimiter $$
 drop procedure if exists filterPreferences;
 create procedure filterPreferences(IN userID_p varchar(255), IN system_p varchar(255),
-IN rY1_p bigint, IN rY2_p bigint, IN ageRating_p varchar(255), 
+IN rY_p varchar(255), IN ageRating_p varchar(255), 
 IN gen_p varchar(255), IN dev_p varchar(255))
 begin
 select g.Title, s.System_Name, g.Release_Year, g.Age_Rating,
@@ -152,8 +152,7 @@ from Video_Games g
 inner join Metacritic_Review r on r.Game_ID = g.Game_ID
 inner join Made_For s on s.Game_ID = g.Game_ID
 where (g.Age_Rating = ageRating_p) and (s.System_Name = system_p) and 
-(((g.Release_Year >= rY1_p) and (g.Release_Year < rY2_p)) or
-(g.Developer = dev_p) or (g.Genre = gen_p)) and 
+((g.Release_Year = rY_p) or (g.Developer = dev_p) or (g.Genre = gen_p)) and 
 g.Game_ID not in (select p.Game_ID from Prefers p where 
 p.User_ID in (select u.User_ID from Users u where 
 u.User_ID = userID_p)) 

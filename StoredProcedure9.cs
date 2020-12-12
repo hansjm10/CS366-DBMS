@@ -11,31 +11,17 @@ namespace SQLConnection
 {
     class finalOutputFromPreferences
     {
-        public void filterPreferences(string connString)
+        public void filterPreferences(string connString, string userID, string rY, string ageRating, string gen, string dev)
         {
            MySqlConnection conn = new MySqlConnection(connString);
 
             try
             {
-                conn.Open();
-                Console.WriteLine("Enter user ID: ");
-                string userID = Console.ReadLine();
-                Console.WriteLine("Enter release year 1: ");
-                string rY1 = Console.ReadLine();
-                Console.WriteLine("Enter release year 2: ");
-                string rY2 = Console.ReadLine();
-                Console.WriteLine("Enter age rating: ");
-                string ageRating = Console.ReadLine();
-                Console.WriteLine("Enter genre: ");
-                string gen = Console.ReadLine();
-                Console.WriteLine("Enter developer: ");
-                string dev = Console.ReadLine();
 
                 MySqlDataAdapter da;
                 MySqlCommand command = new MySqlCommand();
                 MySqlParameter param;
                 MySqlParameter param2;
-                MySqlParameter param3;
                 MySqlParameter param4;
                 MySqlParameter param5;
                 MySqlParameter param6;
@@ -48,8 +34,7 @@ namespace SQLConnection
                 command.CommandText = "filterPreferences";
 
                 param = new MySqlParameter("@userID_p", userID);
-                param2 = new MySqlParameter("@rY1_p", rY1);
-                param3 = new MySqlParameter("@rY2_p", rY2);
+                param2 = new MySqlParameter("@rY_p", rY);
                 param4 = new MySqlParameter("@ageRating_p", ageRating);
                 param5 = new MySqlParameter("@gen_p", gen);
                 param6 = new MySqlParameter("@dev_p", dev);
@@ -61,10 +46,6 @@ namespace SQLConnection
                 param2.Direction = ParameterDirection.Input;
                 param2.DbType = DbType.String;
                 command.Parameters.Add(param2);
-                
-                param3.Direction = ParameterDirection.Input;
-                param3.DbType = DbType.String;
-                command.Parameters.Add(param3);
                 
                 param4.Direction = ParameterDirection.Input;
                 param4.DbType = DbType.String;
@@ -81,12 +62,15 @@ namespace SQLConnection
                 da = new MySqlDataAdapter(command);
                 da.Fill(ds,"Video_Games"); 
                 dt = ds.Tables["Video_Games"];
-                foreach (DataRow dr in dt.Rows)//Once we know this works, we'll probably want to convert this
-                {                              //loop to a datatable/dataframe/matrix/whatever and return that.
-                    Console.WriteLine(dr["Title"] + " " + dr["System_Name"]+" "+ dr["Release_Year"] + " " +
-                    dr["Age_Rating"] + " " + dr["Genre"] + " " + dr["Developer"] + " " + 
-                    dr["avgScore"] + " " + dr["Num_of_Reviews"]);
+                Console.WriteLine("\nWe think these games are right for you!");
+                Console.WriteLine("Title\tSystem\tRelease Year\tAge Rating\tGenre\tDeveloper\tMetacritic Score\t# Reviews\tGameID");
+                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+                foreach (DataRow dr in dt.Rows){
+                    Console.WriteLine(dr["Title"] + "\t" + dr["System_Name"]+"\t"+ dr["Release_Year"] + "\t" +
+                    dr["Age_Rating"] + "\t" + dr["Genre"] + "\t" + dr["Developer"] + "\t" + 
+                    dr["Score"] + "\t\t" + dr["Num_of_Reviews"]+ "\t" + dr["Game_ID"]);
                 }
+                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

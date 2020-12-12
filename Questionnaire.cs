@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class Questionnaire
     {
-        public void questionnaire(string connString)
+        public void questionnaire(string connString, string userID)
         {
             MySqlConnection conn = new MySqlConnection(connString);
             try
@@ -28,7 +28,7 @@ namespace SQLConnection
                 filterBySystem sp4 = new filterBySystem();
                 filterByAnswers sp5 = new filterByAnswers();
 
-                Console.WriteLine("Which system would you like to look at games for?");
+                Console.WriteLine("\nWhich system do you own?");
                 string systemInput = "";
                 string correctInputS = "------------------------------------------------------";
                 bool inputisValid = false;
@@ -45,7 +45,11 @@ namespace SQLConnection
                         }
                     }
                     if (systemInput == correctInputS){
-                        sp4.filterSystem(connString, systemInput);
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = "INSERT INTO Owns(User_ID,System_Name) VALUES(?User_ID,?System_Name)";
+                        cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
+                        cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = systemInput;
+                        cmd.ExecuteNonQuery();
                         inputisValid = true;
                     }
                     else if (systemInput == "I"){
@@ -54,15 +58,15 @@ namespace SQLConnection
                         {
                             Console.WriteLine(dr["System_Name"]);
                         }
-                        Console.WriteLine("");
                     }
                     else{
-                        Console.WriteLine("Input is invalid. Try again.");
+                        Console.WriteLine("\nInput is invalid. Try again.");
                         continue;
                     }
                 }
+                sp4.filterSystem(connString, systemInput);
 
-                Console.WriteLine("Which range of release years do you want your games from?");
+                Console.WriteLine("\nWhich range of release years do you want your games from?");
                 int releaseYear1 = 0, releaseYear2 = 0;
                 string inputRY1 = "", inputRY2 = "";
                 inputisValid = false;
@@ -78,12 +82,12 @@ namespace SQLConnection
                         inputisValid = true;
                     }
                     else {
-                        Console.WriteLine("Input is invalid. Try again.");
+                        Console.WriteLine("\nInput is invalid. Try again.");
                         continue;
                     }
                 }
 
-                Console.WriteLine("What is your favorite genre?");
+                Console.WriteLine("\nWhat is your favorite genre?");
                 string genreInput = "";
                 inputisValid = false;
                 while (inputisValid == false){
@@ -103,15 +107,14 @@ namespace SQLConnection
                         {
                             Console.WriteLine(dr["Genre"]);
                         }
-                        Console.WriteLine("");
                     }
                     else{
-                        Console.WriteLine("Input is invalid. Try again.");
+                        Console.WriteLine("\nInput is invalid. Try again.");
                         continue;
                     }
                 }
 
-                Console.WriteLine("Who is your favorite developer?");
+                Console.WriteLine("\nWho is your favorite developer?");
                 string devInput = "";
                 string correctInputD = "-------------------------------------";
                 inputisValid = false;
@@ -143,7 +146,7 @@ namespace SQLConnection
                         Console.WriteLine("");
                     }
                     else{
-                        Console.WriteLine("Input is invalid. Try again.");
+                        Console.WriteLine("\nInput is invalid. Try again.");
                         continue;
                     }
                 }
@@ -151,7 +154,6 @@ namespace SQLConnection
             catch (MySql.Data.MySqlClient.MySqlException ex){
                 Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
             }
-            conn.Close();
         }
     }
 }
