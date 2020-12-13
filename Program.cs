@@ -147,12 +147,16 @@ namespace SQLConnection
                     if(newInput == "S"){
                         Console.WriteLine("\nEnter the ID of the game you want to save: ");
                         saveID = Console.ReadLine();
+                        var watch = new System.Diagnostics.Stopwatch();
+                        watch.Start();
                         cmd.Parameters.Clear();
                         cmd.CommandText = "INSERT INTO Prefers(User_ID,Game_ID) VALUES(?User_ID,?Game_ID)";
                         cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
                         cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
                         cmd.ExecuteNonQuery();
-                        Console.WriteLine("\nGame saved!");
+                        watch.Stop();
+                        Console.WriteLine("\nGame saved! In: " + "{watch.ElapsedMilliseconds} ms");
+
                     }
                     else if(newInput == "P"){ //Go to preferences list screen.
                         isDone = p.prefsList(connString, userID);

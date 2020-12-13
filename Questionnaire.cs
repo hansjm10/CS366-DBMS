@@ -14,16 +14,20 @@ namespace SQLConnection
         public void questionnaire(string connString, string userID)
         {
             MySqlConnection conn = new MySqlConnection(connString);
+            var watch = new System.Diagnostics.Stopwatch();
             try
             {
                 MySqlDataAdapter daSystems = new MySqlDataAdapter();
+                MySqlDataAdapter daOwns = new MySqlDataAdapter();
                 MySqlDataAdapter daGenres = new MySqlDataAdapter();
                 MySqlDataAdapter daDevs = new MySqlDataAdapter();
                 MySqlCommand cmd = new MySqlCommand();
                 DataSet dsSystems = new DataSet();
+                DataSet dsOwns = new DataSet();
                 DataSet dsGenres = new DataSet();
                 DataSet dsDevs = new DataSet();
                 DataTable dt = new DataTable();
+                DataTable dt2 = new DataTable();
 
                 filterBySystem sp4 = new filterBySystem();
                 filterByAnswers sp5 = new filterByAnswers();
@@ -33,7 +37,7 @@ namespace SQLConnection
                 string correctInputS = "------------------------------------------------------";
                 bool inputisValid = false;
                 while (inputisValid == false){
-                    Console.WriteLine("Enter system (for a list of systems, enter 'I'): ");
+                    Console.WriteLine("Enter system (enter 'I' for a list of systems, or 'O' for a list of systems you own.): ");
                     systemInput = Console.ReadLine();
                     daSystems.SelectCommand = new MySqlCommand("select * from Systems", conn);
                     daSystems.Fill(dsSystems,"Systems");
@@ -43,6 +47,9 @@ namespace SQLConnection
                             correctInputS = systemInput;
                             break;
                         }
+                    daOwns.SelectCommand = new MySqlCommand(("select System_Name from Owns where User_ID = " + userID), conn);
+                    daOwns.Fill(dsOwns,"Owns");
+                    dt2 = dsOwns.Tables["Systems"];
                     }
                     if (systemInput == correctInputS){
                         cmd.Parameters.Clear();
@@ -59,13 +66,21 @@ namespace SQLConnection
                             Console.WriteLine(dr["System_Name"]);
                         }
                     }
+                    else if (systemInput == "O"){
+                        foreach (DataRow dr in dt2.Rows){
+                            Console.WriteLine(dr["System_Name"]);
+                        }
+                    }
                     else{
                         Console.WriteLine("\nInput is invalid. Try again.");
                         continue;
                     }
                 }
+                
+                watch.Start();
                 sp4.filterSystem(connString, systemInput);
-
+                watch.Stop();
+                Console.WriteLine("Executed query in: {watch.ElapsedMilliseconds}");
                 Console.WriteLine("\nWhich range of release years do you want your games from?");
                 int releaseYear1 = 0, releaseYear2 = 0;
                 string inputRY1 = "", inputRY2 = "";
@@ -131,7 +146,10 @@ namespace SQLConnection
                         }
                     }
                     if (devInput == correctInputD){
+                        watch.Restart();
                         sp5.filterAnswers(connString, inputRY1, inputRY2, genreInput, devInput);
+                        watch.Stop();
+                        Console.WriteLine("Executed Query in: {watch.ElapsedMilliseconds}");
                         inputisValid = true;
                     }
                     else if (devInput == "I"){
