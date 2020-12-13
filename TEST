@@ -25,7 +25,7 @@ where User_ID = userID_p;
 end $$
 delimiter ;
 
-//Filters out M-Rated games for users between 13 and 17; can get rid of limit once we know SP works.
+//Filters out M-Rated games for users between 13 and 17.
 drop procedure if exists filterAge17;
 delimiter $$
 create procedure filterAge17()
@@ -38,7 +38,7 @@ where (g.Age_Rating != 'M');
 end $$
 delimiter ;
 
-//Filters out T-rated and M-rated games for users under 13; can get rid of limit once we know SP works.
+//Filters out T-rated and M-rated games for users under 13.
 drop procedure if exists filterAge13;
 delimiter $$
 create procedure filterAge13()
@@ -51,7 +51,7 @@ where (g.Age_Rating != 'T') and (g.Age_Rating != 'M');
 end $$
 delimiter ;
 
-//Filters out systems the user doesn't own; can get rid of limit once we know SP works.
+//Filters out systems the user doesn't own.
 drop procedure if exists filterSystem;
 delimiter $$
 create procedure filterSystem(IN userID_p varchar(255))
