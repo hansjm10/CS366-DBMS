@@ -36,7 +36,7 @@ namespace SQLConnection
             
                 //User Registration and Login System
                 Console.WriteLine("\n***************************************");
-                Console.WriteLine("       VIDEO GAME RECCOMENDER");
+                Console.WriteLine("       VIDEO GAME RECOMMENDER");
                 Console.WriteLine("****************************************");
                 Console.WriteLine("Enter '1' to register as new user; enter '2' to log in.");
                 string loginSelect = Console.ReadLine();
@@ -150,7 +150,7 @@ namespace SQLConnection
                         var watch = new System.Diagnostics.Stopwatch();
                         watch.Start();
                         cmd.Parameters.Clear();
-                        cmd.CommandText = "INSERT INTO Prefers(User_ID,Game_ID) VALUES(?User_ID,?Game_ID)";
+                        cmd.CommandText = "INSERT IGNORE INTO Prefers(User_ID,Game_ID) VALUES(?User_ID,?Game_ID)";
                         cmd.Parameters.Add("?User_ID", MySqlDbType.VarChar).Value = userID;
                         cmd.Parameters.Add("?Game_ID", MySqlDbType.VarChar).Value = saveID;
                         cmd.ExecuteNonQuery();
@@ -174,19 +174,18 @@ namespace SQLConnection
                     }
                     else if(newInput == "C"){ //Close account 
                         Console.WriteLine("\nAre you sure you want to de-register (enter 'Y' for yes or 'N' for no).");
+                        closeChoice = Console.ReadLine();
                         if (closeChoice == "Y"){
                             Console.WriteLine("\nWhatever you say...");
-                            cmd.Parameters.Clear();
-                            cmd.CommandText = "DELETE FROM Users WHERE User_ID = @userID_p";
-                            cmd.Parameters.AddWithValue("@userID_p", userID);  
+                            string delUser = "", delPrefs = "", delOwns = "";
+                            delUser = "DELETE FROM Users WHERE User_ID = '" + userID + "'";
+                            delPrefs = "DELETE FROM Prefers WHERE User_ID = '" + userID + "'";
+                            delOwns = "DELETE FROM Owns WHERE User_ID = '" + userID + "'";
+                            cmd.CommandText = delUser;  
                             cmd.ExecuteNonQuery();
-                            cmd.Parameters.Clear();
-                            cmd.CommandText = "DELETE FROM Prefers WHERE User_ID = @userID_p";
-                            cmd.Parameters.AddWithValue("@userID_p", userID);  
+                            cmd.CommandText = delPrefs;  
                             cmd.ExecuteNonQuery();
-                            cmd.Parameters.Clear();
-                            cmd.CommandText = "DELETE FROM Owns WHERE User_ID = @userID_p";
-                            cmd.Parameters.AddWithValue("@userID_p", userID);  
+                            cmd.CommandText = delOwns;  
                             cmd.ExecuteNonQuery();
                             Console.WriteLine("\nWe're sad to see you go...");
                             isDone = true;

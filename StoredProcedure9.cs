@@ -11,7 +11,7 @@ namespace SQLConnection
 {
     class finalOutputFromPreferences
     {
-        public void filterPreferences(string connString, string userID, string rY, string ageRating, string gen, string dev)
+        public void filterPreferences(string connString, string userID, string system, string rY, string ageRating, string gen, string dev)
         {
            MySqlConnection conn = new MySqlConnection(connString);
 
@@ -22,6 +22,7 @@ namespace SQLConnection
                 MySqlCommand command = new MySqlCommand();
                 MySqlParameter param;
                 MySqlParameter param2;
+                MySqlParameter param3;
                 MySqlParameter param4;
                 MySqlParameter param5;
                 MySqlParameter param6;
@@ -34,7 +35,8 @@ namespace SQLConnection
                 command.CommandText = "filterPreferences";
 
                 param = new MySqlParameter("@userID_p", userID);
-                param2 = new MySqlParameter("@rY_p", rY);
+                param2 = new MySqlParameter("@system_p", system);
+                param3 = new MySqlParameter("@rY_p", rY);
                 param4 = new MySqlParameter("@ageRating_p", ageRating);
                 param5 = new MySqlParameter("@gen_p", gen);
                 param6 = new MySqlParameter("@dev_p", dev);
@@ -46,6 +48,10 @@ namespace SQLConnection
                 param2.Direction = ParameterDirection.Input;
                 param2.DbType = DbType.String;
                 command.Parameters.Add(param2);
+
+                param3.Direction = ParameterDirection.Input;
+                param3.DbType = DbType.String;
+                command.Parameters.Add(param3);
                 
                 param4.Direction = ParameterDirection.Input;
                 param4.DbType = DbType.String;
@@ -63,14 +69,14 @@ namespace SQLConnection
                 da.Fill(ds,"Video_Games"); 
                 dt = ds.Tables["Video_Games"];
                 Console.WriteLine("\nWe think these games are right for you!");
-                Console.WriteLine("Title\tSystem\tRelease Year\tAge Rating\tGenre\tDeveloper\tMetacritic Score\t# Reviews\tGameID");
-                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+                Console.WriteLine("Title\t\tSystem\tRelease Year\tAge Rating\tGenre\tDeveloper\tMetacritic Score\t# Reviews\tGameID");
+                Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
                 foreach (DataRow dr in dt.Rows){
-                    Console.WriteLine(dr["Title"] + "\t" + dr["System_Name"]+"\t"+ dr["Release_Year"] + "\t" +
+                    Console.WriteLine(dr["Title"] + "\t\t" + dr["System_Name"]+"\t"+ dr["Release_Year"] + "\t" +
                     dr["Age_Rating"] + "\t" + dr["Genre"] + "\t" + dr["Developer"] + "\t" + 
                     dr["Score"] + "\t\t" + dr["Num_of_Reviews"]+ "\t" + dr["Game_ID"]);
                 }
-                Console.WriteLine("---------------------------------------------------------------------------------------------------------------------");
+                Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

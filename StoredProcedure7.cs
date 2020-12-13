@@ -37,12 +37,12 @@ namespace SQLConnection
                 da.Fill(ds,"Video_Games"); 
                 dt = ds.Tables["Video_Games"];
                 Console.WriteLine("\nPreferences List");
-                Console.WriteLine("Title\tRelease Year\tAge Rating\tGenre\tDeveloper");
+                Console.WriteLine("Title\tRelease Year\tAge Rating\tGenre\tDeveloper\tGame_ID");
                 Console.WriteLine("------------------------------------------------------------------------------------------------");
                 foreach (DataRow dr in dt.Rows)
                 {                              
                     Console.WriteLine(dr["Title"] + "\t" + dr["Release_Year"] + "\t" +
-                    dr["Age_Rating"] + "\t" + dr["Genre"] + "\t" + dr["Developer"]);
+                    dr["Age_Rating"] + "\t" + dr["Genre"] + "\t" + dr["Developer"] + "\t" + dr["Game_ID"]);
                 }
                 Console.WriteLine("-------------------------------------------------------------------------------------------------");
             }
